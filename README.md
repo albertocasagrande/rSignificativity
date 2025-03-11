@@ -10,9 +10,11 @@
 
 `rSignificativity` is an R package that implements the $\sigma$-significativity for statistical coefficients.
 
+<!--
 #### Help and support
 
 ## [![rSignificativity GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-https://albertocasagrande.github.io/rSignificativity/-yellow.svg)](https://albertocasagrande.github.io/rSignificativity/)
+-->
 
 ### Installation
 
