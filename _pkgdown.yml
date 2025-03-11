@@ -1,0 +1,27 @@
+url: https://albertocasagrande.github.io/rSignificativity/
+template:
+  bootstrap: 5
+
+repo:
+  url:
+    home: https://github.com/albertocasagrande/rSignificativity/
+    source: https://github.com/albertocasagrande/rSignificativity
+    issue: https://github.com/albertocasagrande/rSignificativity/issues
+    user: https://github.com/albertocasagrande
+
+authors:
+  Alberto Casagrande <alberto.casagrande@uniud.it>
+
+reference:
+- title: "Sigma-Significativity"
+  desc:  "Sigma-Significativity"
+  contents:
+  - M_significativity
+  - P_significativity
+
+
+
+
+
+
+

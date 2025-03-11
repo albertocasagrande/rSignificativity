@@ -1,0 +1,6 @@
+#PKG_LIBS = `$(R_HOME)/bin/Rscript -e \ "RcppClassic:::LdFlags()"` 
+CXX_STD=CXX17
+
+PKG_LIBS += -L/opt/homebrew/lib/ -lgmp -lgmpxx
+
+PKG_CXXFLAGS += -I../include/ -I/opt/homebrew/include/

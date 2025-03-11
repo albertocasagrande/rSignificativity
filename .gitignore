@@ -1,0 +1,7 @@
+.vscode
+*.o
+*.so
+*.Rproj
+.Rproj.user
+src/RcppExports.*
+.DS_Store

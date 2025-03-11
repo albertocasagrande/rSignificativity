@@ -1,0 +1,25 @@
+Package: rSignificativity
+Type: Package
+Title: An R package for Statistical Coefficient Significativity
+Version: 0.1.0
+Date: 2025-03-11
+Authors@R: c(
+    person("Alberto", "Casagrande", email = "alberto.casagrande@uniud.it", role = c("aut", "cre")))
+Maintainer: Alberto Casagrande <alberto.casagrande@uniud.it>
+Description: An R package for Statistical Coefficient 
+    Significativity.
+License: GPL-3 + file LICENSE
+LinkingTo: Rcpp
+Encoding: UTF-8
+SystemRequirements: C++17, GNU make
+Imports:
+    Rcpp (>= 1.0.11)
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Suggests:
+    rmarkdown
+VignetteBuilder: knitr
+Depends:
+    methods,
+    R (>= 2.10)
+LazyData: true

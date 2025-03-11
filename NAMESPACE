@@ -1,0 +1,5 @@
+useDynLib(rSignificativity, .registration=TRUE)
+import(methods, Rcpp)
+
+export(M_significativity)
+export(P_significativity)

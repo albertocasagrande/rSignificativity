@@ -1,0 +1,4 @@
+set -x
+set -e
+
+${R_HOME}/bin/R --vanilla --silent -e 'Rcpp::compileAttributes()'
