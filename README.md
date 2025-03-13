@@ -4,17 +4,15 @@
 <!-- badges: start -->
 <!--
 [![R-CMD-check](https://github.com/albertocasagrande/rSignificativity/workflows/R-CMD-check/badge.svg)](https://github.com/albertocasagrande/rSignificativity/actions)
-[![pkgdown](https://github.com/albertocasagrande/rSignificativity/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/albertocasagrande/rSignificativity/actions/workflows/pkgdown.yaml)
 -->
+[![pkgdown](https://github.com/albertocasagrande/rSignificativity/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/albertocasagrande/rSignificativity/actions/workflows/pkgdown.yaml)
 <!-- badges: end -->
 
 `rSignificativity` is an R package that implements the $\sigma$-significativity for statistical coefficients.
 
-<!--
 #### Help and support
 
 ## [![rSignificativity GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-https://albertocasagrande.github.io/rSignificativity/-yellow.svg)](https://albertocasagrande.github.io/rSignificativity/)
--->
 
 ### Installation
 

@@ -130,8 +130,8 @@ RCPP_MODULE(rSignificativity)
 //' # evaluate kappa-significativity of 0.5 in M_{2,100} with 1000 samples
 //' M_significativity(kappa, n = 2, m = 100, c = 0.5, number_of_samples = 1000)
 //'
-//' # evaluate kappa-significativity of 0.5 in M_{2,100} with 1000 samples
-//' M_significativity(kappa, n = 2, m = 100, c = 0.5, number_of_samples = 1000)
+//' # evaluate kappa-significativity of 0.5 in M_{2,5} with 1000 samples
+//' M_significativity(kappa, n = 2, m = 5, c = 0.5, number_of_samples = 1000)
 //'
 //' # exactly compute kappa-significativity of 0.5 in M_{2,5}
 //' M_significativity(kappa, n = 2, m = 5, c = 0.5, number_of_samples = NULL)
