@@ -21,11 +21,11 @@ jobs:
       - name: Install GMP
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgmp3-dev 
+          sudo apt-get install -y libgmp3-dev r-cran-pkgdown
 
       - name: Install dependencies
         run: |
-          install.packages(c("remotes", "pkgdown"))
+          install.packages(c("remotes"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
 
