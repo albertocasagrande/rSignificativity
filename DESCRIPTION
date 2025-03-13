@@ -9,7 +9,7 @@ Maintainer: Alberto Casagrande <alberto.casagrande@uniud.it>
 Description: An R package for Statistical Coefficient 
     Significativity.
 URL: https://albertocasagrande.github.io/rSignificativity
-License: GPL-3 + file LICENSE
+License: MIT + file LICENSE
 LinkingTo: Rcpp
 Encoding: UTF-8
 SystemRequirements: C++17, GNU make
