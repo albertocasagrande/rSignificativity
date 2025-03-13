@@ -161,13 +161,13 @@ and estimate it by using the Monte Carlo method.</p>
 <span><span class="fu"><a href="../reference/M_significativity.html">M_significativity</a></span><span class="op">(</span><span class="va">kappa</span>, n <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">100</span>, c <span class="op">=</span> <span class="fl">0.5</span>, number_of_samples <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.869</span></span>
 <span></span>
-<span><span class="co"># evaluate kappa-significativity of 0.5 in M_{2,100} with 1000 samples</span></span>
-<span><span class="fu"><a href="../reference/M_significativity.html">M_significativity</a></span><span class="op">(</span><span class="va">kappa</span>, n <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">100</span>, c <span class="op">=</span> <span class="fl">0.5</span>, number_of_samples <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.869</span></span>
+<span><span class="co"># evaluate kappa-significativity of 0.5 in M_{2,5} with 1000 samples</span></span>
+<span><span class="fu"><a href="../reference/M_significativity.html">M_significativity</a></span><span class="op">(</span><span class="va">kappa</span>, n <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">5</span>, c <span class="op">=</span> <span class="fl">0.5</span>, number_of_samples <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.557</span></span>
 <span></span>
 <span><span class="co"># exactly compute kappa-significativity of 0.5 in M_{2,5}</span></span>
-<span><span class="fu"><a href="../reference/M_significativity.html">M_significativity</a></span><span class="op">(</span><span class="va">kappa</span>, n <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">100</span>, c <span class="op">=</span> <span class="fl">0.5</span>, number_of_samples <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.8711458</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/M_significativity.html">M_significativity</a></span><span class="op">(</span><span class="va">kappa</span>, n <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">5</span>, c <span class="op">=</span> <span class="fl">0.5</span>, number_of_samples <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.5714286</span></span></code></pre></div>
 <p>The
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>-significativity
 of
@@ -213,10 +213,6 @@ algorithm.</p>
 <code class="sourceCode R"><span><span class="co"># evaluate kappa-significativity of 0.5 in P_{2} with 10000 samples</span></span>
 <span><span class="fu"><a href="../reference/P_significativity.html">P_significativity</a></span><span class="op">(</span><span class="va">kappa</span>, n <span class="op">=</span> <span class="fl">2</span>, c <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.8927</span></span>
-<span></span>
-<span><span class="co"># evaluate kappa-significativity of 0.5 in P_{2} with 1000 samples</span></span>
-<span><span class="fu"><a href="../reference/P_significativity.html">P_significativity</a></span><span class="op">(</span><span class="va">kappa</span>, n <span class="op">=</span> <span class="fl">2</span>, c <span class="op">=</span> <span class="fl">0.5</span>, number_of_samples <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.9</span></span>
 <span></span>
 <span><span class="co"># evaluate kappa-significativity of 0.5 in P_{2} with 1000 samples</span></span>
 <span><span class="fu"><a href="../reference/P_significativity.html">P_significativity</a></span><span class="op">(</span><span class="va">kappa</span>, n <span class="op">=</span> <span class="fl">2</span>, c <span class="op">=</span> <span class="fl">0.5</span>, number_of_samples <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
