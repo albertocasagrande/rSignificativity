@@ -3,5 +3,8 @@
 *.so
 *.Rproj
 .Rproj.user
-src/RcppExports.*
+RcppExports.*
 .DS_Store
+docs/
+pkgdown/
+man/*.Rd
