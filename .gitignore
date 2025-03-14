@@ -8,3 +8,5 @@ RcppExports.*
 docs/
 pkgdown/
 man/*.Rd
+nobuild/*.txt
+nobuild/*.csv
