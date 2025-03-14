@@ -1,12 +1,15 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://albertocasagrande.github.io/rSignificativity/404.html</loc></url>
 <url><loc>https://albertocasagrande.github.io/rSignificativity/LICENSE-text.html</loc></url>
+<url><loc>https://albertocasagrande.github.io/rSignificativity/LICENSE.html</loc></url>
 <url><loc>https://albertocasagrande.github.io/rSignificativity/articles/index.html</loc></url>
 <url><loc>https://albertocasagrande.github.io/rSignificativity/articles/significativity.html</loc></url>
 <url><loc>https://albertocasagrande.github.io/rSignificativity/authors.html</loc></url>
 <url><loc>https://albertocasagrande.github.io/rSignificativity/index.html</loc></url>
-<url><loc>https://albertocasagrande.github.io/rSignificativity/reference/M_significativity.html</loc></url>
-<url><loc>https://albertocasagrande.github.io/rSignificativity/reference/P_significativity.html</loc></url>
+<url><loc>https://albertocasagrande.github.io/rSignificativity/reference/Cohen-single-quote-s-kappa.html</loc></url>
+<url><loc>https://albertocasagrande.github.io/rSignificativity/reference/Information-Agreement.html</loc></url>
+<url><loc>https://albertocasagrande.github.io/rSignificativity/reference/Scott-single-quote-s-pi.html</loc></url>
 <url><loc>https://albertocasagrande.github.io/rSignificativity/reference/index.html</loc></url>
+<url><loc>https://albertocasagrande.github.io/rSignificativity/reference/significativity.html</loc></url>
 </urlset>
 

@@ -71,18 +71,34 @@
     
     
 <p>Statistical coefficients, such as Cohen’s
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>κ</mi><annotation encoding="application/x-tex">\kappa</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">IA</mtext><mo>*</mo></mrow><annotation encoding="application/x-tex">\textrm{IA}*</annotation></semantics></math>,
-measures the agreement between two discrete classifiers mapping
-confusion matrices into real values. When a golden standard classifier
-is available, the best one among a set of classifiers can be selected by
-picking the one whose confusion matrix with respect to the golden
-standard has the maximal statistical coefficient value.</p>
-<p>However, the statistical coefficient values alone lack of a
-meaningfulness indication. Understanding whether two classifiers
-significantly agree on the considered dataset is not possible by simply
-looking at the corresponding statistical coefficient value.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>κ</mi><annotation encoding="application/x-tex">\kappa</annotation></semantics></math><span class="citation">(Cohen 1960)</span> and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="normal">IA</mtext><annotation encoding="application/x-tex">\textrm{IA}</annotation></semantics></math><span class="citation">(Casagrande, Fabris, and Girometti 2020)</span>,
+measure the agreement between two discrete classifiers mapping their
+confusion matrices into real values.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># create a confusion matrix</span></span>
+<span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      [,1] [,2] [,3]</span></span>
+<span><span class="co">#&gt; [1,]    1    4    7</span></span>
+<span><span class="co">#&gt; [2,]    2    5    8</span></span>
+<span><span class="co">#&gt; [3,]    3    6    9</span></span>
+<span></span>
+<span><span class="co"># rSignificativity implements some statistical coefficients</span></span>
+<span><span class="fu">rSignificativity</span><span class="fu">::</span><span class="fu"><a href="../reference/Cohen-single-quote-s-kappa.html">cohen_kappa</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] -0.04166667</span></span>
+<span><span class="fu">rSignificativity</span><span class="fu">::</span><span class="fu"><a href="../reference/Scott-single-quote-s-pi.html">scott_pi</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] -0.05633803</span></span>
+<span><span class="fu">rSignificativity</span><span class="fu">::</span><span class="fu"><a href="../reference/Information-Agreement.html">IA</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.005631984</span></span></code></pre></div>
+<p>When a golden standard classifier is available, the best among a set
+of classifiers can be selected by picking the one whose confusion matrix
+with respect to the golden standard has the maximal statistical
+coefficient value.</p>
+<p>The statistical coefficient values alone lack of a meaningfulness
+indication. Understanding whether two classifiers <em>significantly</em>
+agree on the considered dataset is not possible by simply looking at the
+corresponding statistical coefficient value.</p>
 <p>Let
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ℳ</mi><mrow><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><annotation encoding="application/x-tex">\mathcal{M}_{n,m}</annotation></semantics></math>
 be the set of
@@ -107,17 +123,16 @@ is <span class="math display">$$
 c\right\}\right|}{\left|\mathcal{M}_{n,m}\right|}.
 $$</span> The
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>-significativity
-measures the number of matrices in
+is the [0,1]-normalised number of matrices in
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ℳ</mi><mrow><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><annotation encoding="application/x-tex">\mathcal{M}_{n,m}</annotation></semantics></math>
 having a
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>-value
 smaller or equal to
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>.
-From a different point of view,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>𝜚</mo><mrow><mi>σ</mi><mo>,</mo><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\varrho_{\sigma, n, m}(c)</annotation></semantics></math>
-is the probability to choose by chance a matrix whose
+From a different point of view, it corresponds to the probability of
+choosing by chance a matrix whose
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>-value
-smaller or equal to
+smaller than or equal to
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>.</p>
 <p>Since
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">|</mo><msub><mi>ℳ</mi><mrow><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><mo stretchy="true" form="postfix">|</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mfrac linethickness="0"><mrow><msup><mi>n</mi><mn>2</mn></msup><mo>+</mo><mi>m</mi><mo>−</mo><mn>1</mn></mrow><mi>m</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">|\mathcal{M}_{n,m}|=\binom{n^2+m-1}{m}</annotation></semantics></math>,
@@ -125,48 +140,37 @@ computing
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>𝜚</mo><mrow><mi>σ</mi><mo>,</mo><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\varrho_{\sigma, n, m}(c)</annotation></semantics></math>
 takes time
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>n</mi><mn>2</mn></msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac linethickness="0"><mrow><msup><mi>n</mi><mn>2</mn></msup><mo>+</mo><mi>m</mi><mo>−</mo><mn>1</mn></mrow><mi>m</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">O\left(n^2\binom{n^2+m-1}{m}\right)</annotation></semantics></math>.
-However,
+Nevertheless, the Monte Carlo method <span class="citation">(Metropolis
+and Ulam 1949)</span> can estimate
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>𝜚</mo><mrow><mi>σ</mi><mo>,</mo><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\varrho_{\sigma, n, m}(c)</annotation></semantics></math>
-can be estimated by using the Monte Carlo method with
+with
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>
 samples in time
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Θ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>+</mo><mi>m</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\Theta(N(n^2+m))</annotation></semantics></math>.</p>
-<p>The function <code><a href="../reference/M_significativity.html">M_significativity()</a></code> lets us to both exactly
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Θ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>+</mo><mi>m</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\Theta(N(n^2+m))</annotation></semantics></math>
+with an error proportional to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><msqrt><mi>N</mi></msqrt></mrow><annotation encoding="application/x-tex">1/\sqrt{N}</annotation></semantics></math>
+(e.g., see <span class="citation">(Mackay 1998)</span>).</p>
+<p>The function <code><a href="../reference/significativity.html">significativity()</a></code> lets us to both exactly
 compute
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>𝜚</mo><mrow><mi>σ</mi><mo>,</mo><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\varrho_{\sigma, n, m}(c)</annotation></semantics></math>
 and estimate it by using the Monte Carlo method.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://albertocasagrande.github.io/rSignificativity">"rSignificativity"</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">kappa</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">conf_matrix</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">p_o</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">conf_matrix</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">conf_matrix</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="co"># Calculate the expected agreement (P_e)</span></span>
-<span>  <span class="va">row_totals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">conf_matrix</span><span class="op">)</span></span>
-<span>  <span class="va">col_totals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">conf_matrix</span><span class="op">)</span></span>
-<span>  <span class="va">total</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">conf_matrix</span><span class="op">)</span></span>
-<span>  <span class="va">p_e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">row_totals</span> <span class="op">*</span> <span class="va">col_totals</span><span class="op">)</span> <span class="op">/</span> <span class="va">total</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="co"># Calculate Cohen's kappa</span></span>
-<span>  <span class="va">kappa</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">p_o</span> <span class="op">-</span> <span class="va">p_e</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">p_e</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">kappa</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
 <span><span class="co"># evaluate kappa-significativity of 0.5 in M_{2,100} with 10000 samples</span></span>
-<span><span class="fu"><a href="../reference/M_significativity.html">M_significativity</a></span><span class="op">(</span><span class="va">kappa</span>, n <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">100</span>, c <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.8695</span></span>
+<span><span class="fu"><a href="../reference/significativity.html">significativity</a></span><span class="op">(</span><span class="va">cohen_kappa</span>, c <span class="op">=</span> <span class="fl">0.5</span>, n <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.8725</span></span>
 <span></span>
 <span><span class="co"># evaluate kappa-significativity of 0.5 in M_{2,100} with 1000 samples</span></span>
-<span><span class="fu"><a href="../reference/M_significativity.html">M_significativity</a></span><span class="op">(</span><span class="va">kappa</span>, n <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">100</span>, c <span class="op">=</span> <span class="fl">0.5</span>, number_of_samples <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.869</span></span>
+<span><span class="fu"><a href="../reference/significativity.html">significativity</a></span><span class="op">(</span><span class="va">cohen_kappa</span>, c <span class="op">=</span> <span class="fl">0.5</span>, n <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">100</span>, number_of_samples <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.858</span></span>
 <span></span>
 <span><span class="co"># evaluate kappa-significativity of 0.5 in M_{2,5} with 1000 samples</span></span>
-<span><span class="fu"><a href="../reference/M_significativity.html">M_significativity</a></span><span class="op">(</span><span class="va">kappa</span>, n <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">5</span>, c <span class="op">=</span> <span class="fl">0.5</span>, number_of_samples <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.557</span></span>
+<span><span class="fu"><a href="../reference/significativity.html">significativity</a></span><span class="op">(</span><span class="va">cohen_kappa</span>, c <span class="op">=</span> <span class="fl">0.5</span>, n <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">5</span>, number_of_samples <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.584</span></span>
 <span></span>
 <span><span class="co"># exactly compute kappa-significativity of 0.5 in M_{2,5}</span></span>
-<span><span class="fu"><a href="../reference/M_significativity.html">M_significativity</a></span><span class="op">(</span><span class="va">kappa</span>, n <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">5</span>, c <span class="op">=</span> <span class="fl">0.5</span>, number_of_samples <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/significativity.html">significativity</a></span><span class="op">(</span><span class="va">cohen_kappa</span>, c <span class="op">=</span> <span class="fl">0.5</span>, n <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">5</span>, number_of_samples <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.5714286</span></span></code></pre></div>
 <p>The
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>-significativity
@@ -190,10 +194,12 @@ probability simplex and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">V(\cdot)</annotation></semantics></math>
 is the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n^2-1</annotation></semantics></math>-dimensional
-Lebesgue measure.</p>
+Lebesgue measure <span class="citation">(Casagrande et al.
+2025)</span>.</p>
 <p>If
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>M</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>≤</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">\sigma(M) \leq c</annotation></semantics></math>
-is definable in an o-minimal theory, such as in the case of Cohen’s
+is definable in an o-minimal theory <span class="citation">(van den
+Dries 1998)</span>, such as in the case of Cohen’s
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>κ</mi><annotation encoding="application/x-tex">\kappa</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">IA</mtext><mo>*</mo></mrow><annotation encoding="application/x-tex">\textrm{IA}*</annotation></semantics></math>,
@@ -207,16 +213,61 @@ by using the Monte Carlo method with
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>
 samples in time
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Θ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>n</mi><mn>2</mn></msup><mi>N</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\Theta(n^2 N)</annotation></semantics></math>.
-The function <code><a href="../reference/P_significativity.html">P_significativity()</a></code> implements this
+The function <code><a href="../reference/significativity.html">significativity()</a></code> also implements this
 algorithm.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># evaluate kappa-significativity of 0.5 in P_{2} with 10000 samples</span></span>
-<span><span class="fu"><a href="../reference/P_significativity.html">P_significativity</a></span><span class="op">(</span><span class="va">kappa</span>, n <span class="op">=</span> <span class="fl">2</span>, c <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.8927</span></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># evaluate kappa-significativity of 0.5 in P_{2} with 1000 samples</span></span>
+<span><span class="fu"><a href="../reference/significativity.html">significativity</a></span><span class="op">(</span><span class="va">cohen_kappa</span>, <span class="fl">0.5</span>, n <span class="op">=</span> <span class="fl">2</span>, number_of_samples <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.895</span></span>
 <span></span>
-<span><span class="co"># evaluate kappa-significativity of 0.5 in P_{2} with 1000 samples</span></span>
-<span><span class="fu"><a href="../reference/P_significativity.html">P_significativity</a></span><span class="op">(</span><span class="va">kappa</span>, n <span class="op">=</span> <span class="fl">2</span>, c <span class="op">=</span> <span class="fl">0.5</span>, number_of_samples <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.9</span></span></code></pre></div>
+<span><span class="co"># evaluate kappa-significativity of 0.5 in P_{2} with 10000 samples</span></span>
+<span><span class="fu"><a href="../reference/significativity.html">significativity</a></span><span class="op">(</span><span class="va">cohen_kappa</span>, <span class="fl">0.5</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.8979</span></span>
+<span></span>
+<span><span class="co"># successive calls to Monte Carlo methods may produce different results</span></span>
+<span><span class="fu"><a href="../reference/significativity.html">significativity</a></span><span class="op">(</span><span class="va">cohen_kappa</span>, <span class="fl">0.5</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.8961</span></span>
+<span></span>
+<span><span class="co"># setting the random seed before the call guarantee repeatability</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/significativity.html">significativity</a></span><span class="op">(</span><span class="va">cohen_kappa</span>, <span class="fl">0.5</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.9012</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/significativity.html">significativity</a></span><span class="op">(</span><span class="va">cohen_kappa</span>, <span class="fl">0.5</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.9012</span></span></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-Casagrande:2020b" class="csl-entry">
+Casagrande, Alberto, Francesco Fabris, and Rossano Girometti. 2020.
+<span>“Extending Information Agreement by Continuity.”</span> In
+<em>2020 IEEE International Conference on Bioinformatics and Biomedicine
+(BIBM)</em>, 1432–39. IEEE. <a href="https://doi.org/10.1109/BIBM49941.2020.9313173" class="external-link">https://doi.org/10.1109/BIBM49941.2020.9313173</a>.
+</div>
+<div id="ref-significativity" class="csl-entry">
+Casagrande, Alberto, Francesco Fabris, Girometti Rossano, and Roberto
+Pagliarini. 2025. <span>“Statical Coefficient Significativity.”</span>
+</div>
+<div id="ref-Cohen:1960" class="csl-entry">
+Cohen, Jacob. 1960. <span>“A Coefficient of Agreement for Nominal
+Scales.”</span> <em>Educational and Psychological Measurement</em> 20:
+37–46. <a href="https://doi.org/10.1177/001316446002000104" class="external-link">https://doi.org/10.1177/001316446002000104</a>.
+</div>
+<div id="ref-Mackay1998" class="csl-entry">
+Mackay, D. J. C. 1998. <span>“Introduction to Monte Carlo
+Methods.”</span> In <em>Learning in Graphical Models</em>, edited by
+Michael I. Jordan, 175–204. Dordrecht: Springer Netherlands. <a href="https://doi.org/10.1007/978-94-011-5014-9_7" class="external-link">https://doi.org/10.1007/978-94-011-5014-9_7</a>.
+</div>
+<div id="ref-montecarlo" class="csl-entry">
+Metropolis, Nicholas, and Stanisław Ulam. 1949. <span>“<span>The Monte
+Carlo Method</span>.”</span> <em><span>Journal of the American
+Statistical Association</span></em> 44 (247): 335–41. <a href="https://doi.org/10.1080/01621459.1949.10483310" class="external-link">https://doi.org/10.1080/01621459.1949.10483310</a>.
+</div>
+<div id="ref-Dries_1998" class="csl-entry">
+van den Dries, Lou P. D. 1998. <em>Tame Topology and o-Minimal
+Structures</em>. London Mathematical Society Lecture Note Series.
+Cambridge University Press.
+</div>
+</div>
   </main>
 </div>
 
