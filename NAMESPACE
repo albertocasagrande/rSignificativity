@@ -6,3 +6,4 @@ export(scott_pi)
 export(IA)
 
 export(significativity)
+export(sample_prob_simplex)

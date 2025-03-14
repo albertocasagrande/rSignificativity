@@ -239,7 +239,7 @@ unsigned int significativityCounter(const Rcpp::Function &sigma, const SIGMA_VAL
 
 
 template <typename SIGMA_TYPE, typename SIGMA_VALUE_TYPE = double>
-inline double significativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &c, 
+inline double significativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &c,
                               const size_t &n, const unsigned int m,
                               const unsigned int &number_of_samples)
 {
@@ -314,7 +314,6 @@ VECTOR_TYPE sample_probability_simplex(const size_t& k, gmp_randclass& rand_gene
 
     return V;
 }
-
 
 template <typename SIGMA_VALUE_TYPE = double>
 unsigned int PsignificativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_TYPE &c, const size_t &n,

@@ -96,6 +96,14 @@ double MP_significativity(const Rcpp::Function &sigma, const SEXP &c, const SEXP
     return M_significativity(sigma, c, n, m, number_of_samples);
 }
 
+Rcpp::NumericVector sample_prob_simplex(const size_t& k)
+{
+    gmp_randclass rand_generator(gmp_randinit_default);
+    rand_generator.seed(get_seed<int>());
+
+    return sample_probability_simplex<Rcpp::NumericVector>(k, rand_generator);
+}
+
 using namespace Rcpp;
 
 RCPP_MODULE(rSignificativity)
@@ -153,7 +161,31 @@ RCPP_MODULE(rSignificativity)
 //' set.seed(1)
 //' significativity(cohen_kappa, 0.5, 2)
     function("significativity", &MP_significativity,
-        List::create(_["sigma"], _["c"], _["n"], _["m"] = R_NilValue,
-                     _["number_of_samples"] = 10000),
-        "Estimate the sigma-significativity of c in P_{n}");
+             List::create(_["sigma"], _["c"], _["n"], _["m"] = R_NilValue,
+                          _["number_of_samples"] = 10000),
+             "Estimate the sigma-significativity of c in P_{n}");
+
+//' @name sample_prob_simplex
+//' @title Uniformly sampling \eqn{\Delta^{(k-1)}}
+//' @description This function samples the k-dimensional probability simplex
+//'   \eqn{\Delta^{(k-1)}} using the uniform probability distribution.
+//' @param k The dimension of the probability simplex to be sampled.
+//' @return A sample of \eqn{\Delta^{(k-1)}} taken according the uniform
+//'   probability distribution.
+//' @examples
+//' # sample the 5-dimensional probability simplex
+//' sample_prob_simplex(5)
+//'
+//' # successive calls may produce different results
+//' sample_prob_simplex(5)
+//'
+//' # setting the random seed before the call guarantee repeatability
+//' set.seed(1)
+//' sample_prob_simplex(5)
+//'
+//' set.seed(1)
+//' sample_prob_simplex(5)
+    function("sample_prob_simplex", &sample_prob_simplex,
+             List::create(_["k"]),
+             "Sample the k-dimensional probability simplex");
 }
