@@ -28,6 +28,8 @@ reference:
 - title: "Sigma-Significativity"
   desc:  "Sigma-Significativity"
   contents:
-  - M_significativity
-  - P_significativity
+  - cohen_kappa
+  - scott_pi
+  - IA
+  - significativity
 

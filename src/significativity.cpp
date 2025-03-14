@@ -60,30 +60,40 @@ double validate_double(const SEXP &value, const std::string &name)
     }
 }
 
-double M_significativity(const Rcpp::Function &sigma, const SEXP &n, const SEXP m,
-                         const SEXP &c, const SEXP &number_of_samples)
+double M_significativity(const Rcpp::Function &sigma, const SEXP &c, const SEXP &n,
+                         const SEXP m, const SEXP &number_of_samples)
 {
+    auto c_c = validate_double(c, "c");
     auto c_n = validate_unsigned_int(n, "n");
     auto c_m = validate_unsigned_int(m, "m");
-    auto c_c = validate_double(c, "c");
 
     if (number_of_samples == R_NilValue)
     {
-        return significativity(sigma, c_n, c_m, c_c);
+        return significativity(sigma, c_c, c_n, c_m);
     }
     auto c_number_of_samples = validate_unsigned_int(number_of_samples, "number_of_samples");
 
-    return significativity(sigma, c_n, c_m, c_c, c_number_of_samples);
+    return significativity(sigma, c_c, c_n, c_m, c_number_of_samples);
 }
 
-double P_significativity(const Rcpp::Function &sigma, const SEXP &n,
-                         const SEXP &c, const SEXP &number_of_samples)
+double P_significativity(const Rcpp::Function &sigma, const SEXP &c, const SEXP &n,
+                         const SEXP &number_of_samples)
 {
-    auto c_n = validate_unsigned_int(n, "n");
     auto c_c = validate_double(c, "c");
+    auto c_n = validate_unsigned_int(n, "n");
     auto c_number_of_samples = validate_unsigned_int(number_of_samples, "number_of_samples");
 
-    return Psignificativity(sigma, c_n, c_c, c_number_of_samples);
+    return Psignificativity(sigma, c_c, c_n, c_number_of_samples);
+}
+
+double MP_significativity(const Rcpp::Function &sigma, const SEXP &c, const SEXP &n,
+                          const SEXP m, const SEXP &number_of_samples)
+{
+    if (m == R_NilValue)
+    {
+        return P_significativity(sigma, c, n, number_of_samples);
+    }
+    return M_significativity(sigma, c, n, m, number_of_samples);
 }
 
 using namespace Rcpp;
@@ -91,86 +101,59 @@ using namespace Rcpp;
 RCPP_MODULE(rSignificativity)
 {
 
-//' @name M_significativity
-//' @title Estimate the \eqn{\sigma}-significativity of \eqn{c} in \eqn{\mathcal{M}_{n,m}}
-//' @description This method evaluates the significativity of a \eqn{\sigma}-value. It
-//'   uses the Monte Carlo method by default and uniformly samples the set of all
-//'   the \eqn{n \times n}-confusion matrices summing up to \eqn{m}. When
-//'   `number_of_samples` is set to `NULL`, the computation considers all the
+//' @name significativity
+//' @title The \eqn{\sigma}-significativity of \eqn{c}
+//' @description This function evaluates the significativity of a
+//'   \eqn{\sigma}-value in either \eqn{\mathcal{M}_{n,m}} or
+//'   \eqn{\mathcal{P}_{n}} depending on the call parameters.
+//'
+//'   When `m` is a natural number, the \eqn{\sigma}-significativity of \eqn{c}
+//'   in \eqn{\mathcal{M}_{n,m}} is evaluated. If `number_of_samples` is
+//'   a natural number, the significativity is estimated by using the Monte
+//'   Carlo method. Otherwise, the computation considers all the
 //'   \eqn{n \times n}-confusion matrices.
+//'
+//'   When instead `m` is set to `NULL`, the function uses the Monte Carlo
+//'   method to estimate the \eqn{\sigma}-significativity of \eqn{c} in
+//'   \eqn{\mathcal{P}_{n}}.
 //' @param sigma A statistical coefficient.
 //' @param n The number of rows/columns of the confusion matrix.
-//' @param m The sum of the confusion matrix elements.
+//' @param m The sum of the confusion matrix elements. When set to `NULL`,
+//'   the function estimate the \eqn{\sigma}-significativity of \eqn{c} in
+//'   \eqn{\mathcal{P}_{n}} (default: `NULL`).
 //' @param number_of_samples The number of samples used to evaluate the
 //'   significativity by using Monte Carlo method (default: 10000).
-//'
-//'   When `number_of_samples` is set to `NULL`, the function don't use the Monte
-//'   Carlo method and computes the significativity by considering all the
-//'   confusion matrices in \eqn{\mathcal{M}_{n,m}}.
-//' @return The \eqn{\sigma}-significativity of \eqn{c} in \eqn{\mathcal{M}_{n,m}}.
+//' @return When `m` is a natural number, the function returns the
+//'   \eqn{\sigma}-significativity of \eqn{c} in \eqn{\mathcal{M}_{n,m}}.
+//'   If instead `m` is set to `NULL`, the \eqn{\sigma}-significativity
+//' of \eqn{c} in \eqn{\mathcal{P}_{n}}.
 //' @examples
-//' kappa <- function(conf_matrix) {
-//'     p_o <- sum(diag(conf_matrix)) / sum(conf_matrix)
-//'
-//'     # Calculate the expected agreement (P_e)
-//'     row_totals <- rowSums(conf_matrix)
-//'     col_totals <- colSums(conf_matrix)
-//'     total <- sum(conf_matrix)
-//'     p_e <- sum((row_totals * col_totals) / total^2)
-//'
-//'     # Calculate Cohen's kappa
-//'     kappa <- (p_o - p_e) / (1 - p_e)
-//'
-//'     return(kappa)
-//' }
-//'
-//' # evaluate kappa-significativity of 0.5 in M_{2,100} with 10000 samples
-//' M_significativity(kappa, n = 2, m = 100, c = 0.5)
-//'
-//' # evaluate kappa-significativity of 0.5 in M_{2,100} with 1000 samples
-//' M_significativity(kappa, n = 2, m = 100, c = 0.5, number_of_samples = 1000)
+//' # evaluate kappa-significativity of 0.5 in M_{2,5} with 10000 samples
+//' significativity(cohen_kappa, 0.5, 2, 5)
 //'
 //' # evaluate kappa-significativity of 0.5 in M_{2,5} with 1000 samples
-//' M_significativity(kappa, n = 2, m = 5, c = 0.5, number_of_samples = 1000)
+//' significativity(cohen_kappa, 0.5, 2, 5, number_of_samples = 1000)
 //'
 //' # exactly compute kappa-significativity of 0.5 in M_{2,5}
-//' M_significativity(kappa, n = 2, m = 5, c = 0.5, number_of_samples = NULL)
-    function("M_significativity", &M_significativity,
-             List::create(_["sigma"], _["n"], _["m"], _["c"], _["number_of_samples"] = 10000),
-             "Estimate the sigma-significativity of c in M_{n,m}");
-
-//' @name P_significativity
-//' @title Estimate the \eqn{\sigma}-significativity of \eqn{c} in \eqn{\mathcal{P}_{n}}
-//' @description This method evaluates the significativity of a \eqn{\sigma}-value. It
-//'   uses the Monte Carlo method and uniformly samples the set of all
-//'   the \eqn{n \times n}-probability matrices.
-//' @param sigma A statistical coefficient.
-//' @param n The number of rows/columns of the confusion matrix.
-//' @param number_of_samples The number of samples used to evaluate the
-//'   significativity by using Monte Carlo method (default: 10000).
-//' @return The \eqn{\sigma}-significativity of \eqn{c} in \eqn{\mathcal{P}_{n}}.
-//' @examples
-//' kappa <- function(conf_matrix) {
-//'     p_o <- sum(diag(conf_matrix)) / sum(conf_matrix)
-//'
-//'     # Calculate the expected agreement (P_e)
-//'     row_totals <- rowSums(conf_matrix)
-//'     col_totals <- colSums(conf_matrix)
-//'     total <- sum(conf_matrix)
-//'     p_e <- sum((row_totals * col_totals) / total^2)
-//'
-//'     # Calculate Cohen's kappa
-//'     kappa <- (p_o - p_e) / (1 - p_e)
-//'
-//'     return(kappa)
-//' }
-//'
-//' # evaluate kappa-significativity of 0.5 in P_{2} with 10000 samples
-//' P_significativity(kappa, n = 2, c = 0.5)
+//' significativity(cohen_kappa, 0.5, 2, 5, number_of_samples = NULL)
 //'
 //' # evaluate kappa-significativity of 0.5 in P_{2} with 1000 samples
-//' P_significativity(kappa, n = 2, c = 0.5, number_of_samples = 1000)
-    function("P_significativity", &P_significativity,
-             List::create(_["sigma"], _["n"], _["c"], _["number_of_samples"] = 10000),
-             "Estimate the sigma-significativity of c in P_{n}");
+//' significativity(cohen_kappa, 0.5, 2, number_of_samples = 1000)
+//'
+//' # evaluate kappa-significativity of 0.5 in P_{2} with 10000 samples
+//' significativity(cohen_kappa, 0.5, 2)
+//'
+//' # successive calls to Monte Carlo methods may produce different results
+//' significativity(cohen_kappa, 0.5, 2)
+//'
+//' # setting the random seed before the call guarantee repeatability
+//' set.seed(1)
+//' significativity(cohen_kappa, 0.5, 2)
+//'
+//' set.seed(1)
+//' significativity(cohen_kappa, 0.5, 2)
+    function("significativity", &MP_significativity,
+        List::create(_["sigma"], _["c"], _["n"], _["m"] = R_NilValue,
+                     _["number_of_samples"] = 10000),
+        "Estimate the sigma-significativity of c in P_{n}");
 }

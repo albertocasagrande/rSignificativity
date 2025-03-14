@@ -188,10 +188,23 @@ matrix<ELEM_TYPE> gamma(const std::vector<ELEM_TYPE> &V)
     return M;
 }
 
+template<typename INTEGER_TYPE>
+INTEGER_TYPE get_seed()
+{
+    using namespace Rcpp;
+
+    Function sample_int("sample.int");
+
+    Environment env = Environment::base_env();
+    List machine = as<List>(env[".Machine"]);
+
+    return as<INTEGER_TYPE>(sample_int(machine["integer.max"], 1));
+}
 
 template <typename SIGMA_VALUE_TYPE = double>
-unsigned int significativityCounter(const Rcpp::Function &sigma, const size_t &n, const unsigned int m,
-                                    const SIGMA_VALUE_TYPE &c, const unsigned int &number_of_samples)
+unsigned int significativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_TYPE &c,
+                                    const size_t &n, const unsigned int m,
+                                    const unsigned int &number_of_samples)
 {
     auto indicatorFunction = [&sigma, &c](const Rcpp::NumericMatrix &M)
     {
@@ -204,6 +217,7 @@ unsigned int significativityCounter(const Rcpp::Function &sigma, const size_t &n
     };
 
     gmp_randclass rand_generator(gmp_randinit_default);
+    rand_generator.seed(get_seed<int>());
 
     const size_t k = n * n;
 
@@ -225,16 +239,17 @@ unsigned int significativityCounter(const Rcpp::Function &sigma, const size_t &n
 
 
 template <typename SIGMA_TYPE, typename SIGMA_VALUE_TYPE = double>
-inline double significativity(const SIGMA_TYPE &sigma, const size_t &n, const unsigned int m,
-                              const SIGMA_VALUE_TYPE &c, const unsigned int &number_of_samples)
+inline double significativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &c, 
+                              const size_t &n, const unsigned int m,
+                              const unsigned int &number_of_samples)
 {
-    return static_cast<double>(significativityCounter(sigma, n, m, c, number_of_samples)) / number_of_samples;
+    return static_cast<double>(significativityCounter(sigma, c, n, m, number_of_samples)) / number_of_samples;
 }
 
 
 template <typename SIGMA_VALUE_TYPE = double>
-mpz_class significativityCounter(const Rcpp::Function &sigma, const size_t &n, const unsigned int m,
-                                 const SIGMA_VALUE_TYPE &c)
+mpz_class significativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_TYPE &c,
+                                 const size_t &n, const unsigned int m)
 {
     auto indicatorFunction = [&sigma, &c](const Rcpp::NumericMatrix &M)
     {
@@ -265,10 +280,10 @@ mpz_class significativityCounter(const Rcpp::Function &sigma, const size_t &n, c
 
 
 template <typename SIGMA_TYPE, typename SIGMA_VALUE_TYPE = double>
-inline double significativity(const SIGMA_TYPE &sigma, const size_t &n, const unsigned int m,
-                              const SIGMA_VALUE_TYPE &c)
+inline double significativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &c,
+                              const size_t &n, const unsigned int m)
 {
-    mpq_class r(significativityCounter(sigma, n, m, c), binom<size_t, mpz_class>(m + n*n - 1, m));
+    mpq_class r(significativityCounter(sigma, c, n, m), binom<size_t, mpz_class>(m + n*n - 1, m));
 
     return r.get_d();
 }
@@ -302,8 +317,8 @@ VECTOR_TYPE sample_probability_simplex(const size_t& k, gmp_randclass& rand_gene
 
 
 template <typename SIGMA_VALUE_TYPE = double>
-unsigned int PsignificativityCounter(const Rcpp::Function &sigma, const size_t &n,
-                                     const SIGMA_VALUE_TYPE &c, const unsigned int &number_of_samples)
+unsigned int PsignificativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_TYPE &c, const size_t &n,
+                                     const unsigned int &number_of_samples)
 {
     auto indicatorFunction = [&sigma, &c](const Rcpp::NumericMatrix &M)
     {
@@ -316,6 +331,7 @@ unsigned int PsignificativityCounter(const Rcpp::Function &sigma, const size_t &
     };
 
     gmp_randclass rand_generator(gmp_randinit_default);
+    rand_generator.seed(get_seed<int>());
 
     const size_t k = n * n;
 
@@ -333,8 +349,8 @@ unsigned int PsignificativityCounter(const Rcpp::Function &sigma, const size_t &
 }
 
 template <typename SIGMA_TYPE, typename SIGMA_VALUE_TYPE = double>
-inline double Psignificativity(const SIGMA_TYPE &sigma, const size_t &n,
-                               const SIGMA_VALUE_TYPE &c, const unsigned int &number_of_samples)
+inline double Psignificativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &c, const size_t &n,
+                               const unsigned int &number_of_samples)
 {
-    return static_cast<double>(PsignificativityCounter(sigma, n, c, number_of_samples)) / number_of_samples;
+    return static_cast<double>(PsignificativityCounter(sigma, c, n, number_of_samples)) / number_of_samples;
 }

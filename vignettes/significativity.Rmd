@@ -10,6 +10,7 @@ vignette: >
 editor_options:
   markdown:
     wrap: 72
+bibliography: references.bib
 ---
 
 ```{r, include = FALSE}
@@ -19,18 +20,31 @@ knitr::opts_chunk$set(
 )
 ```
 
-Statistical coefficients, such as Cohen's $\kappa$ and
-$\textrm{IA}*$, measures the agreement between two discrete
-classifiers mapping confusion matrices into real values.
+Statistical coefficients, such as Cohen's $\kappa$ [@Cohen:1960] and
+$\textrm{IA}$ [@Casagrande:2020b],
+measure the agreement between two discrete
+classifiers mapping their confusion matrices into real values.
+
+```{r}
+# create a confusion matrix
+M <- matrix(1:9, nrow = 3, ncol = 3)
+print(M)
+
+# rSignificativity implements some statistical coefficients
+rSignificativity::cohen_kappa(M)
+rSignificativity::scott_pi(M)
+rSignificativity::IA(M)
+```
+
 When a golden standard classifier is available,
-the best one among a set of classifiers can be selected
+the best among a set of classifiers can be selected
 by picking the one whose confusion matrix with respect to
 the golden standard has the maximal statistical coefficient
 value.
 
-However, the statistical coefficient values alone lack of a
+The statistical coefficient values alone lack of a
 meaningfulness indication. Understanding whether
-two classifiers significantly agree on the considered
+two classifiers *significantly* agree on the considered
 dataset is not possible by simply looking at the
 corresponding statistical coefficient value.
 
@@ -43,47 +57,34 @@ $\sigma$-significativity of $c$ in $\mathcal{M}_{n,m}$ is
 $$
 \varrho_{\sigma, n, m}(c) \stackrel{\tiny\textrm{def}}{=} \frac{\left|\left\{M \in \mathcal{M}_{n,m} \, |\, \sigma(M) \leq c\right\}\right|}{\left|\mathcal{M}_{n,m}\right|}.
 $$
-The $\sigma$-significativity measures the number of matrices
+The $\sigma$-significativity is the [0,1]-normalised number of matrices
 in $\mathcal{M}_{n,m}$ having a $\sigma$-value smaller or equal to $c$.
-From a different point of view,  $\varrho_{\sigma, n, m}(c)$ is
-the probability to choose by chance a matrix whose $\sigma$-value smaller or equal to $c$.
+From a different point of view, it corresponds to
+the probability of choosing by chance a matrix whose $\sigma$-value smaller than or equal to $c$.
 
 Since $|\mathcal{M}_{n,m}|=\binom{n^2+m-1}{m}$, computing $\varrho_{\sigma, n, m}(c)$
-takes time $O\left(n^2\binom{n^2+m-1}{m}\right)$. However, $\varrho_{\sigma, n, m}(c)$
-can be estimated by using the Monte Carlo method with $N$ samples in time $\Theta(N(n^2+m))$.
+takes time $O\left(n^2\binom{n^2+m-1}{m}\right)$. Nevertheless,
+the Monte Carlo method [@montecarlo] can estimate $\varrho_{\sigma, n, m}(c)$ 
+with $N$ samples in time $\Theta(N(n^2+m))$ with an error proportional to $1/\sqrt{N}$ 
+(e.g., see [@Mackay1998]).
 
-The function `M_significativity()` lets us to both exactly compute $\varrho_{\sigma, n, m}(c)$
+The function `significativity()` lets us to both exactly compute $\varrho_{\sigma, n, m}(c)$
 and estimate it by using the Monte Carlo method.
 
 ```{r}
 library("rSignificativity")
 
-kappa <- function(conf_matrix) {
-  p_o <- sum(diag(conf_matrix)) / sum(conf_matrix)
-
-  # Calculate the expected agreement (P_e)
-  row_totals <- rowSums(conf_matrix)
-  col_totals <- colSums(conf_matrix)
-  total <- sum(conf_matrix)
-  p_e <- sum((row_totals * col_totals) / total^2)
-
-  # Calculate Cohen's kappa
-  kappa <- (p_o - p_e) / (1 - p_e)
-
-  return(kappa)
-}
-
 # evaluate kappa-significativity of 0.5 in M_{2,100} with 10000 samples
-M_significativity(kappa, n = 2, m = 100, c = 0.5)
+significativity(cohen_kappa, c = 0.5, n = 2, m = 100)
 
 # evaluate kappa-significativity of 0.5 in M_{2,100} with 1000 samples
-M_significativity(kappa, n = 2, m = 100, c = 0.5, number_of_samples = 1000)
+significativity(cohen_kappa, c = 0.5, n = 2, m = 100, number_of_samples = 1000)
 
 # evaluate kappa-significativity of 0.5 in M_{2,5} with 1000 samples
-M_significativity(kappa, n = 2, m = 5, c = 0.5, number_of_samples = 1000)
+significativity(cohen_kappa, c = 0.5, n = 2, m = 5, number_of_samples = 1000)
 
 # exactly compute kappa-significativity of 0.5 in M_{2,5}
-M_significativity(kappa, n = 2, m = 5, c = 0.5, number_of_samples = NULL)
+significativity(cohen_kappa, c = 0.5, n = 2, m = 5, number_of_samples = NULL)
 ```
 
 The $\sigma$-significativity of $c$ in $\mathcal{P}_{n}$,
@@ -92,9 +93,9 @@ matrices, is
 $$
 \rho_{\sigma, n}(c) \stackrel{\tiny\textrm{def}}{=} \frac{V\left(\left\{M \in \mathcal{P}_{n} \, |\, \sigma(M) \leq c\right\}\right)}{V(\Delta^{(n^2-1)})}
 $$
-where $\Delta^{(n^2-1)}$ is $n^2$-dimensional probability simplex and $V(\cdot)$ is the $n^2-1$-dimensional Lebesgue measure.
+where $\Delta^{(n^2-1)}$ is $n^2$-dimensional probability simplex and $V(\cdot)$ is the $n^2-1$-dimensional Lebesgue measure [@significativity].
 
-If $\sigma(M) \leq c$ is definable in an o-minimal theory, such as in the case
+If $\sigma(M) \leq c$ is definable in an o-minimal theory [@Dries_1998], such as in the case
 of Cohen's $\kappa$ and $\textrm{IA}*$, then
 $$
 \lim_{m \rightarrow +\infty}\varrho_{\sigma, n, m}(c) = \rho_{\sigma, n}(c).
@@ -103,12 +104,22 @@ $$
 
 We can estimate $\rho_{\sigma, n}(c)$ by
 using the Monte Carlo method with $N$ samples in time $\Theta(n^2 N)$.
-The function `P_significativity()` implements this algorithm.
+The function `significativity()` also implements this algorithm.
 
 ```{r}
-# evaluate kappa-significativity of 0.5 in P_{2} with 10000 samples
-P_significativity(kappa, n = 2, c = 0.5)
-
 # evaluate kappa-significativity of 0.5 in P_{2} with 1000 samples
-P_significativity(kappa, n = 2, c = 0.5, number_of_samples = 1000)
+significativity(cohen_kappa, 0.5, n = 2, number_of_samples = 1000)
+
+# evaluate kappa-significativity of 0.5 in P_{2} with 10000 samples
+significativity(cohen_kappa, 0.5, n = 2)
+
+# successive calls to Monte Carlo methods may produce different results
+significativity(cohen_kappa, 0.5, n = 2)
+
+# setting the random seed before the call guarantee repeatability
+set.seed(1)
+significativity(cohen_kappa, 0.5, n = 2)
+
+set.seed(1)
+significativity(cohen_kappa, 0.5, n = 2)
 ```

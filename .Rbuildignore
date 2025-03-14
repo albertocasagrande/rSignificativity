@@ -1,0 +1,5 @@
+^\.github$
+^\.vscode$
+^nobuild$
+^README.Rmd$
+\.nojekyll$

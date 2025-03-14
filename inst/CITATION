@@ -1,0 +1,42 @@
+year    <- sub("-.*", "", meta$Date)
+version <- meta$Version
+note    <- sprintf("R package version %s", version)
+
+
+citHeader("To cite rSignificativity in publications use these two references:")
+
+bibentry(bibtype     = "unpublished",
+         author      = c(person(given = "Alberto", family = "Casagrande"),
+                         person(given = "Fabris", family = "Francesco"),
+                         person(given = "Rossano", family = "Girometti"),
+                         person(given = "Roberto", family = "Pagliarini")),
+         title       = "Statical Coefficient Significativity",
+         month       = "March",
+         year        = "2025",
+         note        = "Unpublished",
+         textVersion =
+           paste(paste0("Casagrande, Alberto and Fabris,",
+                        "Francesco and Girometti, Rossano, ",
+                        "and Pagliarini, Roberto"),
+                 "(March, 2025).",
+                 "Statical Coefficient Significativity",
+                 sep = " ")
+)
+
+bibentry(bibtype     = "Manual",
+         title       = paste0("{rSignificativity}: An R package for",
+                              "Statistical Coefficient Significativity"),
+         author      = c(as.person("Alberto Casagrande")),
+         year        = year,
+         note        = note,
+         url         = "https://albertocasagrande.github.io/rSignificativity",
+         textVersion =
+           paste0("Casagrande, Alberto (",
+                  year,
+                  "). rSignificativity: An R package for Statistical ",
+                  "Coefficient Significativity. ",
+                  note, ", ",
+                  "url: https://albertocasagrande.github.io/",
+                  "rSignificativity."
+                  )
+)

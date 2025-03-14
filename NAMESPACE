@@ -1,5 +1,8 @@
 useDynLib(rSignificativity, .registration=TRUE)
 import(methods, Rcpp)
 
-export(M_significativity)
-export(P_significativity)
+export(cohen_kappa)
+export(scott_pi)
+export(IA)
+
+export(significativity)
