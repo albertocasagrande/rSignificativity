@@ -221,7 +221,7 @@ unsigned int significativityCounter(const Rcpp::Function &sigma, const SIGMA_VAL
 
     const size_t k = n * n;
 
-    Rcpp::NumericVector V(k);
+    Rcpp::NumericMatrix M(n);
 
     const auto class_size = binom<size_t, mpz_class>(m + k - 1, m);
 
@@ -229,8 +229,7 @@ unsigned int significativityCounter(const Rcpp::Function &sigma, const SIGMA_VAL
     for (size_t i = 0; i < number_of_samples; ++i)
     {
         mpz_class rand = rand_generator.get_z_range(class_size);
-        fill_iota(V, m, k, rand);
-        Rcpp::NumericMatrix M(n, n, V.begin());
+        fill_iota(M, m, k, rand);
         counter += indicatorFunction(M);
     }
 
@@ -262,16 +261,14 @@ mpz_class significativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_
     };
 
     const size_t k = n * n;
-
-    Rcpp::NumericVector V(k);
+    Rcpp::NumericMatrix M(n);
 
     const auto class_size = binom<size_t, mpz_class>(m + k - 1, m);
 
     mpz_class counter = 0;
     for (mpz_class i = 0; i < class_size; i = i+1)
     {
-        fill_iota(V, m, k, i);
-        Rcpp::NumericMatrix M(n, n, V.begin());
+        fill_iota(M, m, k, i);
         counter = counter+indicatorFunction(M);
     }
 
@@ -304,7 +301,6 @@ void fill_sample_probability_simplex(VECTOR_TYPE& V, gmp_randclass& rand_generat
     }
 }
 
-
 template <typename VECTOR_TYPE>
 VECTOR_TYPE sample_probability_simplex(const size_t& k, gmp_randclass& rand_generator)
 {
@@ -332,15 +328,12 @@ unsigned int PsignificativityCounter(const Rcpp::Function &sigma, const SIGMA_VA
     gmp_randclass rand_generator(gmp_randinit_default);
     rand_generator.seed(get_seed<int>());
 
-    const size_t k = n * n;
-
-    Rcpp::NumericVector V(k);
+    Rcpp::NumericMatrix M(n);
 
     unsigned int counter = 0;
     for (size_t i = 0; i < number_of_samples; ++i)
     {
-        fill_sample_probability_simplex(V, rand_generator);
-        Rcpp::NumericMatrix M(n, n, V.begin());
+        fill_sample_probability_simplex(M, rand_generator);
         counter += indicatorFunction(M);
     }
 
