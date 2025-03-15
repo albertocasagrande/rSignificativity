@@ -137,6 +137,12 @@ VECTOR_TYPE iota(const unsigned int m, const unsigned int k, const INDEX_TYPE i)
     return ell;
 }
 
+/**
+ * @brief Get the random seed from the R environment
+ * 
+ * @tparam INTEGER_TYPE the random seed type
+ * @return INTEGER_TYPE a integer 
+ */
 template<typename INTEGER_TYPE>
 INTEGER_TYPE get_seed()
 {
@@ -150,10 +156,25 @@ INTEGER_TYPE get_seed()
     return as<INTEGER_TYPE>(sample_int(machine["integer.max"], 1));
 }
 
+/**
+ * @brief Sample N times M_{n,m} and count how many samples M have sigma(M)<=c
+ * 
+ * This function uniformly samples N times the set of the (n x n)-confusion
+ * matrices whose elements sum up to m, i.e., M_{n,m}, and counts how many of 
+ * the samples M are such that sigma(M)<=c.
+ * 
+ * @tparam SIGMA_VALUE_TYPE is the sigma-value type
+ * @param sigma is a statistical coefficients
+ * @param c is a sigma-value
+ * @param n is the number of rows/columns of the considered confusion matrices
+ * @param m is the number of tests used to build the considered confusion matrices
+ * @param N is the number of confusion matrices to be sampled
+ * @return the number of sampled confusion matrices M such that sigma(M)<=c
+ */
 template <typename SIGMA_VALUE_TYPE = double>
 unsigned int significativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_TYPE &c,
                                     const size_t &n, const unsigned int m,
-                                    const unsigned int &number_of_samples)
+                                    const unsigned int &N)
 {
     auto indicatorFunction = [&sigma, &c](const Rcpp::NumericMatrix &M)
     {
@@ -175,7 +196,7 @@ unsigned int significativityCounter(const Rcpp::Function &sigma, const SIGMA_VAL
     const auto class_size = binom<size_t, mpz_class>(m + k - 1, m);
 
     unsigned int counter = 0;
-    for (size_t i = 0; i < number_of_samples; ++i)
+    for (size_t i = 0; i < N; ++i)
     {
         mpz_class rand = rand_generator.get_z_range(class_size);
         fill_iota(M, m, k, rand);
@@ -185,16 +206,42 @@ unsigned int significativityCounter(const Rcpp::Function &sigma, const SIGMA_VAL
     return counter;
 }
 
-
+/**
+ * @brief Estimate the sigma-significativity of c in M_{n,m}
+ * 
+ * This function estimates the sigma-significativity of c in M_{n,m} by using 
+ * the Monte Carlo method.
+ * 
+ * @tparam SIGMA_VALUE_TYPE is the sigma-value type
+ * @param sigma is a statistical coefficients
+ * @param c is a sigma-value
+ * @param n is the number of rows/columns of the considered confusion matrices
+ * @param m is the number of tests used to build the considered confusion matrices
+ * @param N is the number of confusion matrices to be sampled
+ * @return The Monte Carlo estimation of the sigma-significativity of c in M_{n,m}
+ */
 template <typename SIGMA_TYPE, typename SIGMA_VALUE_TYPE = double>
 inline double significativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &c,
                               const size_t &n, const unsigned int m,
-                              const unsigned int &number_of_samples)
+                              const unsigned int &N)
 {
-    return static_cast<double>(significativityCounter(sigma, c, n, m, number_of_samples)) / number_of_samples;
+    return static_cast<double>(significativityCounter(sigma, c, n, m, N)) / N;
 }
 
-
+/**
+ * @brief Count how many of the matrices in M_{n,m} have sigma(M)<=c
+ * 
+ * This function counts how many of the (n x n)-confusion matrices whose elements 
+ * sum up to m, i.e., how many of the matrices M in M_{n,m}, are such that 
+ * sigma(M)<=c.
+ * 
+ * @tparam SIGMA_VALUE_TYPE is the sigma-value type
+ * @param sigma is a statistical coefficients
+ * @param c is a sigma-value
+ * @param n is the number of rows/columns of the considered confusion matrices
+ * @param m is the number of tests used to build the considered confusion matrices
+ * @return the number of confusion matrices M in M_{n,m} such that sigma(M)<=c
+ */
 template <typename SIGMA_VALUE_TYPE = double>
 mpz_class significativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_TYPE &c,
                                  const size_t &n, const unsigned int m)
@@ -224,7 +271,18 @@ mpz_class significativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_
     return counter;
 }
 
-
+/**
+ * @brief Compute the sigma-significativity of c in M_{n,m}
+ * 
+ * This function computes the sigma-significativity of c in M_{n,m}.
+ * 
+ * @tparam SIGMA_VALUE_TYPE is the sigma-value type
+ * @param sigma is a statistical coefficients
+ * @param c is a sigma-value
+ * @param n is the number of rows/columns of the considered confusion matrices
+ * @param m is the number of tests used to build the considered confusion matrices
+ * @return The sigma-significativity of c in M_{n,m}
+ */
 template <typename SIGMA_TYPE, typename SIGMA_VALUE_TYPE = double>
 inline double significativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &c,
                               const size_t &n, const unsigned int m)
@@ -234,7 +292,16 @@ inline double significativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &c
     return r.get_d();
 }
 
-
+/**
+ * @brief Sample the probability simplex
+ * 
+ * This function uniformly samples the probability simplex whose dimension is
+ * `V.size()` and copies the sample in `V`.
+ * 
+ * @tparam VECTOR_TYPE is the sample output type
+ * @param V is the vector in which the sample will be placed
+ * @param rand_generator is a random generator
+ */
 template <typename VECTOR_TYPE>
 void fill_sample_probability_simplex(VECTOR_TYPE& V, gmp_randclass& rand_generator)
 {
@@ -250,6 +317,15 @@ void fill_sample_probability_simplex(VECTOR_TYPE& V, gmp_randclass& rand_generat
     }
 }
 
+/**
+ * @brief Sample the k-dimensional probability simplex
+ * 
+ * This function uniformly samples the k-probability simplex.
+ * 
+ * @tparam VECTOR_TYPE is the sample output type
+ * @param k is the dimension of the probability simplex to be sampled
+ * @param rand_generator is a random generator
+ */
 template <typename VECTOR_TYPE>
 VECTOR_TYPE sample_probability_simplex(const size_t& k, gmp_randclass& rand_generator)
 {
@@ -260,9 +336,23 @@ VECTOR_TYPE sample_probability_simplex(const size_t& k, gmp_randclass& rand_gene
     return V;
 }
 
+/**
+ * @brief Sample N times P_{n} and count how many samples M have sigma(M)<=c
+ * 
+ * This function uniformly samples N times the set of the (n x n)-probability
+ * matrices, i.e., P_{n}, and counts how many of the samples P are such that 
+ * sigma(P)<=c.
+ * 
+ * @tparam SIGMA_VALUE_TYPE is the sigma-value type
+ * @param sigma is a statistical coefficients
+ * @param c is a sigma-value
+ * @param n is the number of rows/columns of the considered probability matrices
+ * @param N is the number of probability matrices to be sampled
+ * @return the number of sampled probability matrices P such that sigma(P)<=c
+ */
 template <typename SIGMA_VALUE_TYPE = double>
 unsigned int PsignificativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_TYPE &c, const size_t &n,
-                                     const unsigned int &number_of_samples)
+                                     const unsigned int &N)
 {
     auto indicatorFunction = [&sigma, &c](const Rcpp::NumericMatrix &M)
     {
@@ -280,7 +370,7 @@ unsigned int PsignificativityCounter(const Rcpp::Function &sigma, const SIGMA_VA
     Rcpp::NumericMatrix M(n);
 
     unsigned int counter = 0;
-    for (size_t i = 0; i < number_of_samples; ++i)
+    for (size_t i = 0; i < N; ++i)
     {
         fill_sample_probability_simplex(M, rand_generator);
         counter += indicatorFunction(M);
@@ -289,9 +379,22 @@ unsigned int PsignificativityCounter(const Rcpp::Function &sigma, const SIGMA_VA
     return counter;
 }
 
+/**
+ * @brief Estimate the sigma-significativity of c in P_{n}
+ * 
+ * This function estimates the sigma-significativity of c in P_{n} by using 
+ * the Monte Carlo method.
+ * 
+ * @tparam SIGMA_VALUE_TYPE is the sigma-value type
+ * @param sigma is a statistical coefficients
+ * @param c is a sigma-value
+ * @param n is the number of rows/columns of the considered probability matrices
+ * @param N is the number of probability matrices to be sampled
+ * @return The Monte Carlo estimation of the sigma-significativity of c in P_{n}
+ */
 template <typename SIGMA_TYPE, typename SIGMA_VALUE_TYPE = double>
 inline double Psignificativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &c, const size_t &n,
-                               const unsigned int &number_of_samples)
+                               const unsigned int &N)
 {
-    return static_cast<double>(PsignificativityCounter(sigma, c, n, number_of_samples)) / number_of_samples;
+    return static_cast<double>(PsignificativityCounter(sigma, c, n, N)) / N;
 }
