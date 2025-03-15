@@ -168,7 +168,8 @@ RCPP_MODULE(rSignificativity)
 //' @name sample_prob_simplex
 //' @title Uniformly sampling \eqn{\Delta^{(k-1)}}
 //' @description This function samples the k-dimensional probability simplex
-//'   \eqn{\Delta^{(k-1)}} using the uniform probability distribution.
+//'   \eqn{\Delta^{(k-1)}=\left\{ \langle x_1, \ldots x_k \rangle \in \mathbb{R}_{\geq 0}^k\, |\, \sum_{i=1}^k x_i = 1\right\}}
+//'   using the uniform probability distribution.
 //' @param k The dimension of the probability simplex to be sampled.
 //' @return A sample of \eqn{\Delta^{(k-1)}} taken according the uniform
 //'   probability distribution.

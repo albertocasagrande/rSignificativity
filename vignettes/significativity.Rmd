@@ -93,7 +93,8 @@ matrices, is
 $$
 \rho_{\sigma, n}(c) \stackrel{\tiny\textrm{def}}{=} \frac{V\left(\left\{M \in \mathcal{P}_{n} \, |\, \sigma(M) \leq c\right\}\right)}{V(\Delta^{(n^2-1)})}
 $$
-where $\Delta^{(n^2-1)}$ is $n^2$-dimensional probability simplex and $V(\cdot)$ is the $n^2-1$-dimensional Lebesgue measure [@significativity].
+where $\Delta^{(k-1)} =\left\{ \langle x_1, \ldots x_k \rangle \in \mathbb{R}_{\geq 0}^k\, |\, \sum_{i=1}^k x_i = 1\right\}$ 
+is the $k$-dimensional probability simplex and $V(\cdot)$ is the $n^2-1$-dimensional Lebesgue measure [@significativity].
 
 If $\sigma(M) \leq c$ is definable in an o-minimal theory [@Dries_1998], such as in the case
 of Cohen's $\kappa$ and $\textrm{IA}*$, then
