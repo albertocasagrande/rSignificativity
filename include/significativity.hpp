@@ -125,67 +125,16 @@ void fill_iota(VECTOR_TYPE &ell, unsigned int m, unsigned int k, INDEX_TYPE i)
  * @param m is the sum of the output vector components
  * @param k is the size of the output vector
  * @param i is the index
- * @return std::vector<unsigned int>
+ * @return VECTOR_TYPE
  */
 template <typename VECTOR_TYPE, typename INDEX_TYPE>
-VECTOR_TYPE
-iota(const unsigned int m, const unsigned int k, const INDEX_TYPE i)
+VECTOR_TYPE iota(const unsigned int m, const unsigned int k, const INDEX_TYPE i)
 {
     VECTOR_TYPE ell(k);
 
     fill_iota(ell, m, k, i);
 
     return ell;
-}
-
-/**
- * @brief Fill a square matrix with the components of a vector
- *
- * @tparam ELEM_TYPE is the type of the vector components
- * @param V is the input vector
- * @return matrix<ELEM_TYPE>
- */
-template <typename ELEM_TYPE>
-void fill_gamma(matrix<ELEM_TYPE> &M, const std::vector<ELEM_TYPE> &V)
-{
-    if (M.size() * M.size() != V.size())
-    {
-        throw std::domain_error("The vector cannot be reshaped in the square matrix");
-    }
-
-    auto V_it = V.begin();
-    for (auto row_it = M.begin(); row_it != M.end(); ++row_it)
-    {
-        std::vector<ELEM_TYPE> &row = *row_it;
-        for (auto elem_it = row.begin(); elem_it != row.end(); ++elem_it, ++V_it)
-        {
-            *elem_it = *V_it;
-        }
-    }
-}
-
-/**
- * @brief Fill a square matrix with the components of a vector
- *
- * @tparam ELEM_TYPE is the type of the vector components
- * @param V is the input vector
- * @return matrix<ELEM_TYPE>
- */
-template <typename ELEM_TYPE>
-matrix<ELEM_TYPE> gamma(const std::vector<ELEM_TYPE> &V)
-{
-    const size_t n = std::floor(std::sqrt(static_cast<double>(V.size())));
-
-    if (n * n < V.size())
-    {
-        throw std::domain_error("The parameter cannot be reshaped in a square matrix");
-    }
-
-    matrix<ELEM_TYPE> M(n, std::vector<ELEM_TYPE>(n));
-
-    fill_matrix(M, gamma);
-
-    return M;
 }
 
 template<typename INTEGER_TYPE>
