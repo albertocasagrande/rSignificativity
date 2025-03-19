@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   significativity: significativity.html
-last_built: 2025-03-15T10:24Z
+last_built: 2025-03-19T09:29Z
 urls:
   reference: https://albertocasagrande.github.io/rSignificativity/reference
   article: https://albertocasagrande.github.io/rSignificativity/articles

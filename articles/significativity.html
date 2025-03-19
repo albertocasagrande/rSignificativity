@@ -5,15 +5,15 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Statistical Coefficient Significativity • rSignificativity</title>
+<title>Agreement Value Significativity • rSignificativity</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Statistical Coefficient Significativity">
-<meta name="description" content="Measuring the significativity of a statistical coefficient
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Agreement Value Significativity">
+<meta name="description" content="Measuring the significativity of agreement values
 ">
-<meta property="og:description" content="Measuring the significativity of a statistical coefficient
+<meta property="og:description" content="Measuring the significativity of agreement values
 ">
 <meta property="og:image" content="https://albertocasagrande.github.io/rSignificativity/logo.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
@@ -27,7 +27,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rSignificativity</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,7 +40,7 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/significativity.html">Statistical Coefficient Significativity</a></li>
+<li><a class="dropdown-item" href="../articles/significativity.html">Agreement Value Significativity</a></li>
   </ul>
 </li>
       </ul>
@@ -61,7 +61,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Statistical Coefficient Significativity</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Agreement Value Significativity</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/albertocasagrande/rSignificativity/vignettes/significativity.Rmd" class="external-link"><code>vignettes/significativity.Rmd</code></a></small>
@@ -70,10 +70,10 @@
 
     
     
-<p>Statistical coefficients, such as Cohen’s
+<p>Agreement measures, such as Cohen’s
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>κ</mi><annotation encoding="application/x-tex">\kappa</annotation></semantics></math><span class="citation">(Cohen 1960)</span> and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="normal">IA</mtext><annotation encoding="application/x-tex">\textrm{IA}</annotation></semantics></math><span class="citation">(Casagrande, Fabris, and Girometti 2020)</span>,
-measure the agreement between two discrete classifiers mapping their
+gauge the agreement between two discrete classifiers mapping their
 confusion matrices into real values.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create a confusion matrix</span></span>
@@ -84,7 +84,7 @@ confusion matrices into real values.</p>
 <span><span class="co">#&gt; [2,]    2    5    8</span></span>
 <span><span class="co">#&gt; [3,]    3    6    9</span></span>
 <span></span>
-<span><span class="co"># rSignificativity implements some statistical coefficients</span></span>
+<span><span class="co"># rSignificativity implements some agreement measures</span></span>
 <span><span class="fu">rSignificativity</span><span class="fu">::</span><span class="fu"><a href="../reference/Cohen-single-quote-s-kappa.html">cohen_kappa</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] -0.04166667</span></span>
 <span><span class="fu">rSignificativity</span><span class="fu">::</span><span class="fu"><a href="../reference/Scott-single-quote-s-pi.html">scott_pi</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
@@ -93,12 +93,11 @@ confusion matrices into real values.</p>
 <span><span class="co">#&gt; [1] 0.005631984</span></span></code></pre></div>
 <p>When a golden standard classifier is available, the best among a set
 of classifiers can be selected by picking the one whose confusion matrix
-with respect to the golden standard has the maximal statistical
-coefficient value.</p>
-<p>The statistical coefficient values alone lack of a meaningfulness
-indication. Understanding whether two classifiers <em>significantly</em>
-agree on the considered dataset is not possible by simply looking at the
-corresponding statistical coefficient value.</p>
+with respect to the golden standard has the maximal agreement value.</p>
+<p>The agreement values alone lack of a meaningfulness indication.
+Understanding whether two classifiers <em>significantly</em> agree on
+the considered dataset is not possible by simply looking at the
+corresponding agreement value.</p>
 <p>Let
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ℳ</mi><mrow><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><annotation encoding="application/x-tex">\mathcal{M}_{n,m}</annotation></semantics></math>
 be the set of
@@ -109,7 +108,7 @@ i.e., the elements of any matrix
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ℳ</mi><mrow><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><annotation encoding="application/x-tex">\mathcal{M}_{n,m}</annotation></semantics></math>
 sum up to
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>.
-For any statistical coefficient
+For any agreement measure
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>,
 the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>-significativity
@@ -119,7 +118,7 @@ in
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ℳ</mi><mrow><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><annotation encoding="application/x-tex">\mathcal{M}_{n,m}</annotation></semantics></math>
 is <span class="math display">$$
 \varrho_{\sigma, n, m}(c) \stackrel{\tiny\textrm{def}}{=}
-\frac{\left|\left\{M \in \mathcal{M}_{n,m} \, |\, \sigma(M) \leq
+\frac{\left|\left\{M \in \mathcal{M}_{n,m} \, |\, \sigma(M) &lt;
 c\right\}\right|}{\left|\mathcal{M}_{n,m}\right|}.
 $$</span> The
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>-significativity
@@ -127,12 +126,12 @@ is the [0,1]-normalised number of matrices in
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ℳ</mi><mrow><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><annotation encoding="application/x-tex">\mathcal{M}_{n,m}</annotation></semantics></math>
 having a
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>-value
-smaller or equal to
+greater than
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>.
 From a different point of view, it corresponds to the probability of
 choosing by chance a matrix whose
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>-value
-smaller than or equal to
+greater than
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>.</p>
 <p>Since
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">|</mo><msub><mi>ℳ</mi><mrow><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><mo stretchy="true" form="postfix">|</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mfrac linethickness="0"><mrow><msup><mi>n</mi><mn>2</mn></msup><mo>+</mo><mi>m</mi><mo>−</mo><mn>1</mn></mrow><mi>m</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">|\mathcal{M}_{n,m}|=\binom{n^2+m-1}{m}</annotation></semantics></math>,
@@ -159,7 +158,7 @@ and estimate it by using the Monte Carlo method.</p>
 <span></span>
 <span><span class="co"># evaluate kappa-significativity of 0.5 in M_{2,100} with 10000 samples</span></span>
 <span><span class="fu"><a href="../reference/significativity.html">significativity</a></span><span class="op">(</span><span class="va">cohen_kappa</span>, c <span class="op">=</span> <span class="fl">0.5</span>, n <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.8725</span></span>
+<span><span class="co">#&gt; [1] 0.8721</span></span>
 <span></span>
 <span><span class="co"># evaluate kappa-significativity of 0.5 in M_{2,100} with 1000 samples</span></span>
 <span><span class="fu"><a href="../reference/significativity.html">significativity</a></span><span class="op">(</span><span class="va">cohen_kappa</span>, c <span class="op">=</span> <span class="fl">0.5</span>, n <span class="op">=</span> <span class="fl">2</span>, m <span class="op">=</span> <span class="fl">100</span>, number_of_samples <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
@@ -184,7 +183,7 @@ is the set of all the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math>-probability
 matrices, is <span class="math display">$$
 \rho_{\sigma, n}(c) \stackrel{\tiny\textrm{def}}{=}
-\frac{V\left(\left\{M \in \mathcal{P}_{n} \, |\, \sigma(M) \leq
+\frac{V\left(\left\{M \in \mathcal{P}_{n} \, |\, \sigma(M) &lt;
 c\right\}\right)}{V(\Delta^{(n^2-1)})}
 $$</span> where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>Δ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>k</mi><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></msup><mo>=</mo><mrow><mo stretchy="true" form="prefix">{</mo><mo stretchy="false" form="prefix">⟨</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><msub><mi>x</mi><mi>k</mi></msub><mo stretchy="false" form="postfix">⟩</mo><mo>∈</mo><msubsup><mi>ℝ</mi><mrow><mo>≥</mo><mn>0</mn></mrow><mi>k</mi></msubsup><mspace width="0.167em"></mspace><mo stretchy="false" form="prefix">|</mo><mspace width="0.167em"></mspace><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>k</mi></msubsup><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn><mo stretchy="true" form="postfix">}</mo></mrow></mrow><annotation encoding="application/x-tex">\Delta^{(k-1)} =\left\{ \langle x_1, \ldots x_k \rangle \in \mathbb{R}_{\geq 0}^k\, |\, \sum_{i=1}^k x_i = 1\right\}</annotation></semantics></math>
@@ -197,7 +196,7 @@ is the
 Lebesgue measure <span class="citation">(Casagrande et al.
 2025)</span>.</p>
 <p>If
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>M</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>≤</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">\sigma(M) \leq c</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>M</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>&lt;</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">\sigma(M) &lt; c</annotation></semantics></math>
 is definable in an o-minimal theory <span class="citation">(van den
 Dries 1998)</span>, such as in the case of Cohen’s
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>κ</mi><annotation encoding="application/x-tex">\kappa</annotation></semantics></math>
