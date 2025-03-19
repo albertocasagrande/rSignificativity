@@ -111,8 +111,8 @@ RCPP_MODULE(rSignificativity)
 
 //' @name significativity
 //' @title The \eqn{\sigma}-significativity of \eqn{c}
-//' @description This function evaluates the significativity of a
-//'   \eqn{\sigma}-value in either \eqn{\mathcal{M}_{n,m}} or
+//' @description This function evaluates the \eqn{\sigma}-significativity of an
+//'   agreement value \eqn{c} in either \eqn{\mathcal{M}_{n,m}} or
 //'   \eqn{\mathcal{P}_{n}} depending on the call parameters.
 //'
 //'   When `m` is a natural number, the \eqn{\sigma}-significativity of \eqn{c}
@@ -124,7 +124,7 @@ RCPP_MODULE(rSignificativity)
 //'   When instead `m` is set to `NULL`, the function uses the Monte Carlo
 //'   method to estimate the \eqn{\sigma}-significativity of \eqn{c} in
 //'   \eqn{\mathcal{P}_{n}}.
-//' @param sigma A statistical coefficient.
+//' @param sigma An agreement measure.
 //' @param n The number of rows/columns of the confusion matrix.
 //' @param m The sum of the confusion matrix elements. When set to `NULL`,
 //'   the function estimate the \eqn{\sigma}-significativity of \eqn{c} in

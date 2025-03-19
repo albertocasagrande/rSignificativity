@@ -20,7 +20,7 @@ for (i in 1:num_of_samples) {
 
   matrix <- matrix(sample, nrow = n, ncol = n)
 
-  if (sigma(matrix) <= c) {
+  if (sigma(matrix) < c) {
     filename <- filenames[1]
   } else {
     filename <- filenames[2]

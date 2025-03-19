@@ -8,7 +8,7 @@
 [![pkgdown](https://github.com/albertocasagrande/rSignificativity/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/albertocasagrande/rSignificativity/actions/workflows/pkgdown.yaml)
 <!-- badges: end -->
 
-`rSignificativity` is an R package that implements the $\sigma$-significativity for statistical coefficients.
+`rSignificativity` is an R package that implements the $\sigma$-significativity for agreement values.
 
 #### Help and support
 

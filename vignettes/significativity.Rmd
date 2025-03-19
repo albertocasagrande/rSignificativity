@@ -1,10 +1,10 @@
 ---
-title: "Statistical Coefficient Significativity"
+title: "Agreement Value Significativity"
 output: rmarkdown::html_vignette
 description: >
-  Measuring the significativity of a statistical coefficient
+  Measuring the significativity of agreement values
 vignette: >
-  %\VignetteIndexEntry{Statistical Coefficient Significativity}
+  %\VignetteIndexEntry{Agreement Value Significativity}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options:
@@ -20,9 +20,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-Statistical coefficients, such as Cohen's $\kappa$ [@Cohen:1960] and
+Agreement measures, such as Cohen's $\kappa$ [@Cohen:1960] and
 $\textrm{IA}$ [@Casagrande:2020b],
-measure the agreement between two discrete
+gauge the agreement between two discrete
 classifiers mapping their confusion matrices into real values.
 
 ```{r}
@@ -30,7 +30,7 @@ classifiers mapping their confusion matrices into real values.
 M <- matrix(1:9, nrow = 3, ncol = 3)
 print(M)
 
-# rSignificativity implements some statistical coefficients
+# rSignificativity implements some agreement measures
 rSignificativity::cohen_kappa(M)
 rSignificativity::scott_pi(M)
 rSignificativity::IA(M)
@@ -39,28 +39,29 @@ rSignificativity::IA(M)
 When a golden standard classifier is available,
 the best among a set of classifiers can be selected
 by picking the one whose confusion matrix with respect to
-the golden standard has the maximal statistical coefficient
+the golden standard has the maximal agreement
 value.
 
-The statistical coefficient values alone lack of a
+The agreement values alone lack of a
 meaningfulness indication. Understanding whether
 two classifiers *significantly* agree on the considered
 dataset is not possible by simply looking at the
-corresponding statistical coefficient value.
+corresponding agreement value.
 
 Let $\mathcal{M}_{n,m}$ be the set of
 $n \times n$-confusion matrices built over a dataset
 having size $m$, i.e., the elements of any matrix
 $\mathcal{M}_{n,m}$ sum up to $m$.
-For any statistical coefficient $\sigma$, the
+For any agreement measure $\sigma$, the
 $\sigma$-significativity of $c$ in $\mathcal{M}_{n,m}$ is
 $$
-\varrho_{\sigma, n, m}(c) \stackrel{\tiny\textrm{def}}{=} \frac{\left|\left\{M \in \mathcal{M}_{n,m} \, |\, \sigma(M) \leq c\right\}\right|}{\left|\mathcal{M}_{n,m}\right|}.
+\varrho_{\sigma, n, m}(c) \stackrel{\tiny\textrm{def}}{=} \frac{\left|\left\{M \in \mathcal{M}_{n,m} \, |\, \sigma(M) < c\right\}\right|}{\left|\mathcal{M}_{n,m}\right|}.
 $$
 The $\sigma$-significativity is the [0,1]-normalised number of matrices
-in $\mathcal{M}_{n,m}$ having a $\sigma$-value smaller or equal to $c$.
+in $\mathcal{M}_{n,m}$ having a $\sigma$-value greater than $c$.
 From a different point of view, it corresponds to
-the probability of choosing by chance a matrix whose $\sigma$-value smaller than or equal to $c$.
+the probability of choosing by chance a matrix whose $\sigma$-value greater
+than $c$.
 
 Since $|\mathcal{M}_{n,m}|=\binom{n^2+m-1}{m}$, computing $\varrho_{\sigma, n, m}(c)$
 takes time $O\left(n^2\binom{n^2+m-1}{m}\right)$. Nevertheless,
@@ -91,12 +92,12 @@ The $\sigma$-significativity of $c$ in $\mathcal{P}_{n}$,
 where $\mathcal{P}_{n}$ is the set of all the $n \times n$-probability
 matrices, is
 $$
-\rho_{\sigma, n}(c) \stackrel{\tiny\textrm{def}}{=} \frac{V\left(\left\{M \in \mathcal{P}_{n} \, |\, \sigma(M) \leq c\right\}\right)}{V(\Delta^{(n^2-1)})}
+\rho_{\sigma, n}(c) \stackrel{\tiny\textrm{def}}{=} \frac{V\left(\left\{M \in \mathcal{P}_{n} \, |\, \sigma(M) < c\right\}\right)}{V(\Delta^{(n^2-1)})}
 $$
 where $\Delta^{(k-1)} =\left\{ \langle x_1, \ldots x_k \rangle \in \mathbb{R}_{\geq 0}^k\, |\, \sum_{i=1}^k x_i = 1\right\}$ 
 is the $k$-dimensional probability simplex and $V(\cdot)$ is the $n^2-1$-dimensional Lebesgue measure [@significativity].
 
-If $\sigma(M) \leq c$ is definable in an o-minimal theory [@Dries_1998], such as in the case
+If $\sigma(M) < c$ is definable in an o-minimal theory [@Dries_1998], such as in the case
 of Cohen's $\kappa$ and $\textrm{IA}*$, then
 $$
 \lim_{m \rightarrow +\infty}\varrho_{\sigma, n, m}(c) = \rho_{\sigma, n}(c).

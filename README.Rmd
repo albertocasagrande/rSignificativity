@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 -->
 <!-- badges: end -->
 
-`rSignificativity` is an R package that implements the $\sigma$-significativity for statistical coefficients.
+`rSignificativity` is an R package that implements the $\sigma$-significativity for agreement values.
 
 #### Help and support
 
