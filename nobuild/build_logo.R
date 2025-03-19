@@ -22,7 +22,7 @@ k <- 10;
 
 f <- function(n) {
   return(function(c) {
-    return(M_significativity(kappa, n, 100, c))
+    return(significativity(kappa, c, n, 100))
   })
 }
 
