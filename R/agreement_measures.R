@@ -21,7 +21,6 @@ is_a_confusion_matrix <- function(confusion_matrix) {
 #'
 #' # evaluate Cohen's kappa of `conf_matrix`
 #' cohen_kappa(conf_matrix)
-
 cohen_kappa <- function(conf_matrix) {
   is_a_confusion_matrix(conf_matrix)
 
@@ -80,6 +79,9 @@ IA <- function(conf_matrix) {
   }
 
   prob_matrix <- conf_matrix / matrix_sum
+
+  colnames(prob_matrix) <- NULL
+  rownames(prob_matrix) <- NULL
 
   prob_x <- colSums(prob_matrix)
   prob_y <- rowSums(prob_matrix)
