@@ -2,8 +2,8 @@ devtools::load_all()
 
 produce_delta_data <- function(sigma, sigma_name, sigma_min, sigma_max,
                                c_steps = 20, Ns = c(2, 3),
-                               Ms = c(2, 4, 8, 16, 32, 64),
-                               repetitions = 10, number_of_samples = 1000) {
+                               Ms = c(10, 100, 1000),
+                               repetitions = 10, number_of_samples = 10000) {
 
   df <- data.frame(matrix(ncol = 1, nrow = c_steps + 1))
   colnames(df) <- sigma_name
