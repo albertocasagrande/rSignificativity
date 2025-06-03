@@ -86,19 +86,19 @@ IA <- function(conf_matrix) {
   prob_x <- colSums(prob_matrix)
   prob_y <- rowSums(prob_matrix)
 
-  row_zeros <- sum(prob_y == 0)
-  col_zeros <- sum(prob_x == 0)
-
-  if (row_zeros == 1) {
-    return(1 - (col_zeros / nrow(prob_matrix)))
-  }
-
-  if (col_zeros == 1) {
-    return(1 - (row_zeros / nrow(prob_matrix)))
-  }
-
   hx <- entropy(prob_x)
+  if (hx == 0) {
+    nonZeroRows <- sum(prob_y != 0)
+
+    return(1 - (nonZeroRows / nrow(prob_matrix)))
+  }
+
   hy <- entropy(prob_y)
+  if (hx == 0) {
+    nonZeroCols <- sum(prob_x != 0)
+
+    return(1 - (nonZeroCols / ncol(prob_matrix)))
+  }
 
   return((hx + hy - entropy(prob_matrix)) / min(hx, hy))
 }
