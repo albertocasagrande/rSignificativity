@@ -3,3 +3,5 @@
 ^nobuild$
 ^README.Rmd$
 \.nojekyll$
+^.*\.Rproj$
+^\.Rproj\.user$
