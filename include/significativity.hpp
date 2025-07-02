@@ -74,9 +74,11 @@ void fill_iota(VECTOR_TYPE &ell, unsigned int m, unsigned int k, INDEX_TYPE i)
     }
     auto ell_it = ell.begin();
 
-    INDEX_TYPE C = binom<unsigned int, INDEX_TYPE>(m + k - 2, m);
+    INDEX_TYPE C = binom<unsigned int, INDEX_TYPE>(m + k - 1, m);
     while (k > 1)
     {
+        C = (k - 1) * C / (m + k - 1); // eval binom(m+(k-1)-2,m)
+
         unsigned int ml = m;
         while (m>0 && i>=C)
         {
@@ -90,12 +92,6 @@ void fill_iota(VECTOR_TYPE &ell, unsigned int m, unsigned int k, INDEX_TYPE i)
         ++ell_it;
 
         --k;
-
-        if (k>1) {
-            C = (k - 1) * C / (m + k - 1); // eval binom(m+(k-1)-2,m)
-        } else {
-            C = 0;
-        }
     }
 
     *ell_it = m;
