@@ -11,7 +11,7 @@ using the uniform probability distribution."><meta property="og:image" content="
 
     <a class="navbar-brand me-2" href="../index.html">rSignificativity</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,11 +64,11 @@ probability distribution.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># sample the 5-dimensional probability simplex</span></span></span>
 <span class="r-in"><span><span class="fu">sample_prob_simplex</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.09154597 0.26428412 0.03201528 0.52208634 0.09006829</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.17058011 0.40188304 0.17388162 0.19960926 0.05404597</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># successive calls may produce different results</span></span></span>
 <span class="r-in"><span><span class="fu">sample_prob_simplex</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.009668262 0.628714326 0.070132429 0.088306865 0.203178119</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.30827330 0.01997969 0.20885237 0.32390207 0.13899258</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># setting the random seed before the call guarantee repeatability</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>

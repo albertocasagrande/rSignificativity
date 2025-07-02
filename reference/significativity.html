@@ -27,7 +27,7 @@ method to estimate the \(\sigma\)-significativity of \(c\) in
 
     <a class="navbar-brand me-2" href="../index.html">rSignificativity</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,27 +105,27 @@ of \(c\) in \(\mathcal{P}_{n}\).</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># evaluate kappa-significativity of 0.5 in M_{2,5} with 10000 samples</span></span></span>
 <span class="r-in"><span><span class="fu">significativity</span><span class="op">(</span><span class="va">cohen_kappa</span>, <span class="fl">0.5</span>, <span class="fl">2</span>, <span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.569</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7904</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># evaluate kappa-significativity of 0.5 in M_{2,5} with 1000 samples</span></span></span>
 <span class="r-in"><span><span class="fu">significativity</span><span class="op">(</span><span class="va">cohen_kappa</span>, <span class="fl">0.5</span>, <span class="fl">2</span>, <span class="fl">5</span>, number_of_samples <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.569</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.778</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># exactly compute kappa-significativity of 0.5 in M_{2,5}</span></span></span>
 <span class="r-in"><span><span class="fu">significativity</span><span class="op">(</span><span class="va">cohen_kappa</span>, <span class="fl">0.5</span>, <span class="fl">2</span>, <span class="fl">5</span>, number_of_samples <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5714286</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7857143</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># evaluate kappa-significativity of 0.5 in P_{2} with 1000 samples</span></span></span>
 <span class="r-in"><span><span class="fu">significativity</span><span class="op">(</span><span class="va">cohen_kappa</span>, <span class="fl">0.5</span>, <span class="fl">2</span>, number_of_samples <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.892</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.886</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># evaluate kappa-significativity of 0.5 in P_{2} with 10000 samples</span></span></span>
 <span class="r-in"><span><span class="fu">significativity</span><span class="op">(</span><span class="va">cohen_kappa</span>, <span class="fl">0.5</span>, <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.8916</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.897</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># successive calls to Monte Carlo methods may produce different results</span></span></span>
 <span class="r-in"><span><span class="fu">significativity</span><span class="op">(</span><span class="va">cohen_kappa</span>, <span class="fl">0.5</span>, <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.897</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.8982</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># setting the random seed before the call guarantee repeatability</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
