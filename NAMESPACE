@@ -5,6 +5,7 @@ export(cohen_kappa)
 export(scott_pi)
 export(IA)
 
+export(marginal.significativity)
 export(significativity)
 export(sample_prob_simplex)
 export(weak_composition_enum)

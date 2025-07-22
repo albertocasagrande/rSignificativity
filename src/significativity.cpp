@@ -96,6 +96,25 @@ double MP_significativity(const Rcpp::Function &sigma, const SEXP &c, const SEXP
     return M_significativity(sigma, c, n, m, number_of_samples);
 }
 
+std::vector<unsigned int> validate_unsigned_int_vect(const SEXP &value, const std::string &name)
+{
+    if (! Rcpp::is<Rcpp::IntegerVector>(value)) {
+        ::Rf_error("The parameter \"%s\" must be a vector of unsigned positive integers.", name.c_str());
+    }
+
+    return Rcpp::as<std::vector<unsigned int>>(value);
+}
+
+double marginal_significativity(const Rcpp::Function &sigma, const SEXP &c,
+                                const SEXP &s, const SEXP &number_of_samples)
+{
+    auto c_c = validate_double(c, "c");
+    auto c_s = validate_unsigned_int_vect(s, "s");
+    auto c_number_of_samples = validate_unsigned_int(number_of_samples, "number_of_samples");
+
+    return significativity(sigma, c_c, c_s, c_number_of_samples);
+}
+
 Rcpp::NumericVector sample_prob_simplex(const size_t& k)
 {
     gmp_randclass rand_generator(gmp_randinit_default);
@@ -130,6 +149,7 @@ RCPP_MODULE(rSignificativity)
 //'   method to estimate the \eqn{\sigma}-significativity of \eqn{c} in
 //'   \eqn{\mathcal{P}_{n}}.
 //' @param sigma An agreement measure.
+//' @param c An agreement value.
 //' @param n The number of rows/columns of the confusion matrix.
 //' @param m The sum of the confusion matrix elements. When set to `NULL`,
 //'   the function estimate the \eqn{\sigma}-significativity of \eqn{c} in
@@ -169,6 +189,79 @@ RCPP_MODULE(rSignificativity)
              List::create(_["sigma"], _["c"], _["n"], _["m"] = R_NilValue,
                           _["number_of_samples"] = 10000),
              "Estimate the sigma-significativity of c in P_{n}");
+
+//' @name marginal.significativity
+//' @title Estimate the marginal \eqn{\sigma}-significativity of \eqn{c}
+//' @description This function evaluates the \eqn{\sigma}-significativity
+//'   of an agreement value \eqn{c} in \eqn{\mathcal{M}_{(s,\cdot)}}.
+//'
+//'   \eqn{\mathcal{M}_{(s,\cdot)}} is the set of the confusion matrices
+//'   having \eqn{|s|} rows and columns such that the elements in the 
+//'   \eqn{i}-th row sum up to \eqn{s(i)}.
+//'
+//'   The \eqn{\sigma}-significativity of \eqn{c} in
+//'   \eqn{\mathcal{M}_{(s,\cdot)}} is the ratio between the number of
+//'   matrices \eqn{M \in \mathcal{M}_{(s,\cdot)}} such that
+//'   \eqn{\sigma(M) < c} and the cardinality of
+//'   \eqn{\mathcal{M}_{(s,\cdot)}}. This corresponds to the
+//'   probability of choosing with uniform distribution a matrix
+//'   \eqn{M \in \mathcal{M}_{(s,\cdot)}} such that \eqn{\sigma(M) < c}.
+//' @param sigma An agreement measure.
+//' @param c An agreement value.
+//' @param s A vector of natural values.
+//' @param number_of_samples The number of samples used to evaluate the
+//'   significativity by using Monte Carlo method (default: 10000).
+//' @return The function returns the \eqn{\sigma}-significativity of
+//'   \eqn{c} in \eqn{\mathcal{M}_{(s,\cdot)}} as estimated by the
+//'   Monte Carlo method using `number_of_samples` samples.
+//' @examples
+//' # define a vector defining the number of classifications of a
+//' # two-class classifier 
+//' s <- as.integer(c(10, 1))
+//'
+//' # gauge kappa-significativity of 0.5 in M_{(s,.)} with 10000 samples
+//' marginal.significativity(cohen_kappa, 0.5, s)
+//'
+//' # define a different vector defining the number of classifications of a
+//' # two-class classifier 
+//' s2 <- as.integer(c(6, 5))
+//'
+//' # define a vector defining the number of classifications of a five-class
+//' # classifier 
+//' s3 <- as.integer(c(6, 5, 3, 8, 5))
+//'
+//' # gauge kappa-significativity of 0.5 in M_{(s3,.)} with 10000 samples
+//' marginal.significativity(cohen_kappa, 0.5, s3)
+//'
+//' # gauge kappa-significativity of 0.5 in M_{(s3,.)} with 40000 samples
+//' marginal.significativity(cohen_kappa, 0.5, s3, number_of_samples=40000)
+//'
+//' # gauge kappa-significativity of 0.5 in M_{(s2,.)} with 10000 samples
+//' marginal.significativity(cohen_kappa, 0.5, s2)
+//'
+//' # define a (2x2)-confusion matrix
+//' M <- matrix(as.integer(c(9, 0, 1, 1)), nrow=2)
+//' M
+//' cohen_kappa(M)
+//'
+//' # gauge kappa-significativity of cohen_kappa(M) in M_{(rowSums(M),.)}
+//' # with 10000 samples
+//' marginal.significativity(cohen_kappa, cohen_kappa(M),
+//'                          as.integer(rowSums(M)))
+//'
+//' # define another (2x2)-confusion matrix
+//' M2 <- matrix(as.integer(c(5, 0, 1, 5)), nrow=2)
+//' M2
+//' cohen_kappa(M2)
+//'
+//' # gauge kappa-significativity of cohen_kappa(M2) in M_{(rowSums(M2),.)}
+//' # with 10000 samples
+//' marginal.significativity(cohen_kappa, cohen_kappa(M2),
+//'                          as.integer(rowSums(M2)))
+    function("marginal.significativity", &marginal_significativity,
+             List::create(_["sigma"], _["c"], _["s"],
+                          _["number_of_samples"] = 10000),
+             "Estimate the sigma-significativity of c in M_{(s,.)}");
 
 //' @name weak_composition_enum
 //' @title The lexicographic weak composition enumeration

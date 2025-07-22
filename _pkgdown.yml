@@ -25,12 +25,14 @@ articles:
   - significativity
 
 reference:
-- title: "Sigma-Significativity"
-  desc:  "Sigma-Significativity"
+- title: "Agreement Measures"
   contents:
   - cohen_kappa
   - scott_pi
   - IA
+- title: "Sigma-Significativity"
+  contents:
+  - marginal.significativity
   - significativity
   - sample_prob_simplex
   - weak_composition_enum

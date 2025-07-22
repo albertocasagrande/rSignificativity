@@ -198,6 +198,56 @@ unsigned int significativityCounter(const Rcpp::Function &sigma, const SIGMA_VAL
 }
 
 /**
+ * @brief Sample N times M_{(s,.)} and count how many samples M have sigma(M)<c
+ * 
+ * This function uniformly samples N times the set of the (n x n)-confusion
+ * matrices respecting s on rows, i.e., M_{(s,.)}, and counts how many of 
+ * the samples M are such that sigma(M)<c.
+ * 
+ * @tparam SIGMA_VALUE_TYPE is the sigma-value type
+ * @param sigma is an agreement measure
+ * @param c is a sigma-value
+ * @param s is the vector of the classifications of the row-classifier
+ * @param N is the number of confusion matrices to be sampled
+ * @return the number of sampled confusion matrices M such that sigma(M)<c
+ */
+template <typename SIGMA_VALUE_TYPE = double>
+unsigned int significativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_TYPE &c,
+                                    const std::vector<unsigned int>& s,
+                                    const unsigned int &N)
+{
+    auto indicatorFunction = [&sigma, &c](const Rcpp::NumericMatrix &M)
+    {
+        if (Rcpp::as<double>(sigma(M)) < c)
+        {
+            return 1;
+        }
+
+        return 0;
+    };
+
+    gmp_randclass rand_generator(gmp_randinit_default);
+    rand_generator.seed(get_seed<int>());
+
+    const size_t n = s.size(); 
+    Rcpp::NumericMatrix M(n);
+
+    unsigned int counter = 0;
+    for (size_t i = 0; i < N; ++i)
+    {
+        for (size_t j = 0; j < s.size(); ++j) {
+            const auto& m = s[j];
+            const auto class_size = binom<size_t, mpz_class>(m + n - 1, m);
+            mpz_class rand = rand_generator.get_z_range(class_size);
+            M(j, Rcpp::_) = iota<Rcpp::NumericVector>(m, n, rand);
+        }
+        counter += indicatorFunction(M);
+    }
+
+    return counter;
+}
+
+/**
  * @brief Estimate the sigma-significativity of c in M_{n,m}
  * 
  * This function estimates the sigma-significativity of c in M_{n,m} by using 
@@ -388,4 +438,25 @@ inline double Psignificativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &
                                const unsigned int &N)
 {
     return static_cast<double>(PsignificativityCounter(sigma, c, n, N)) / N;
+}
+
+/**
+ * @brief Estimate the sigma-significativity of c in M_{(s,.)}
+ * 
+ * This function estimates the sigma-significativity of c in M_{(s,.)} by using 
+ * the Monte Carlo method.
+ * 
+ * @tparam SIGMA_VALUE_TYPE is the sigma-value type
+ * @param sigma is an agreement measure
+ * @param c is a sigma-value
+ * @param s is the vector of the classifications of the row-classifier
+ * @param N is the number of confusion matrices to be sampled
+ * @return The Monte Carlo estimation of the sigma-significativity of c in M_{(s,.)}
+ */
+template <typename SIGMA_TYPE, typename SIGMA_VALUE_TYPE = double>
+inline double significativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &c,
+                              const std::vector<unsigned int>& s,
+                              const unsigned int &N)
+{
+    return static_cast<double>(significativityCounter(sigma, c, s, N)) / N;
 }
