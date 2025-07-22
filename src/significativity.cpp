@@ -104,6 +104,11 @@ Rcpp::NumericVector sample_prob_simplex(const size_t& k)
     return sample_probability_simplex<Rcpp::NumericVector>(k, rand_generator);
 }
 
+Rcpp::NumericVector weak_composition_enum(const unsigned int& m, const unsigned int& k, const size_t index)
+{
+    return iota<Rcpp::NumericVector>(m, k, index);
+}
+
 using namespace Rcpp;
 
 RCPP_MODULE(rSignificativity)
@@ -164,6 +169,38 @@ RCPP_MODULE(rSignificativity)
              List::create(_["sigma"], _["c"], _["n"], _["m"] = R_NilValue,
                           _["number_of_samples"] = 10000),
              "Estimate the sigma-significativity of c in P_{n}");
+
+//' @name weak_composition_enum
+//' @title The lexicographic weak composition enumeration
+//' @description  This function implements the lexicographic order enumerator 
+//'   for weak compositions of \eqn{m} in \eqn{k} parts.
+//'
+//'   A weak composition of \eqn{m} in \eqn{k} parts is a vector of \eqn{k}
+//'   natural numbers whose sum is \eqn{m}. \eqn{\mathcal{C}_{m,k}} is the
+//'   set of all the weak composition of \eqn{m} in \eqn{k} parts.
+//'
+//'   The lexicographic order \eqn{<_l} over \eqn{\mathcal{C}_{m,k}} is an
+//'   order between weak compositions of \eqn{m} in \eqn{k} parts such that
+//'   \eqn{\langle a_1,\ldots a_k \rangle <_l \langle b_1,\ldots b_k \rangle}
+//'   when there exist \eqn{i \in [1, k]} such that for all
+//'   \eqn{j \in [1, i-1]} it holds that \eqn{a_j = b_j} and \eqn{a_i<b_i}.
+//' @param m The sum of the natural values in the output vector.
+//' @param k The size of the output vector.
+//' @param index The index of the output vector in the lexicographic order.
+//' @return The `index`-th weak composition in the lexicographic order of
+//'   \eqn{\mathcal{C}_{m,k}}.
+//' @examples
+//' # evaluate the 1st element in the lexicographic order of C_{100, 5}
+//' weak_composition_enum(100, 5, 0)
+//'
+//' # evaluate it again
+//' weak_composition_enum(100, 5, 0)
+//'
+//' # evaluate the 42137th element in the lexicographic order of C_{100, 5}
+//' weak_composition_enum(100, 5, 42137)
+    function("weak_composition_enum", &weak_composition_enum,
+             List::create(_["m"], _["k"], _["index"]),
+             "Enumerator function for the weak compositions in C_{m,k}.");
 
 //' @name sample_prob_simplex
 //' @title Uniformly sampling \eqn{\Delta^{(k-1)}}

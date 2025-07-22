@@ -33,4 +33,5 @@ reference:
   - IA
   - significativity
   - sample_prob_simplex
+  - weak_composition_enum
 
