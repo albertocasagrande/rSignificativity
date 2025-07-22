@@ -130,9 +130,9 @@ VECTOR_TYPE iota(const unsigned int m, const unsigned int k, const INDEX_TYPE i)
 
 /**
  * @brief Get the random seed from the R environment
- * 
+ *
  * @tparam INTEGER_TYPE the random seed type
- * @return INTEGER_TYPE a integer 
+ * @return INTEGER_TYPE a integer
  */
 template<typename INTEGER_TYPE>
 INTEGER_TYPE get_seed()
@@ -149,11 +149,11 @@ INTEGER_TYPE get_seed()
 
 /**
  * @brief Sample N times M_{n,m} and count how many samples M have sigma(M)<c
- * 
+ *
  * This function uniformly samples N times the set of the (n x n)-confusion
- * matrices whose elements sum up to m, i.e., M_{n,m}, and counts how many of 
+ * matrices whose elements sum up to m, i.e., M_{n,m}, and counts how many of
  * the samples M are such that sigma(M)<c.
- * 
+ *
  * @tparam SIGMA_VALUE_TYPE is the sigma-value type
  * @param sigma is an agreement measure
  * @param c is a sigma-value
@@ -199,11 +199,11 @@ unsigned int significativityCounter(const Rcpp::Function &sigma, const SIGMA_VAL
 
 /**
  * @brief Sample N times M_{(s,.)} and count how many samples M have sigma(M)<c
- * 
+ *
  * This function uniformly samples N times the set of the (n x n)-confusion
- * matrices respecting s on rows, i.e., M_{(s,.)}, and counts how many of 
+ * matrices respecting s on rows, i.e., M_{(s,.)}, and counts how many of
  * the samples M are such that sigma(M)<c.
- * 
+ *
  * @tparam SIGMA_VALUE_TYPE is the sigma-value type
  * @param sigma is an agreement measure
  * @param c is a sigma-value
@@ -229,7 +229,7 @@ unsigned int significativityCounter(const Rcpp::Function &sigma, const SIGMA_VAL
     gmp_randclass rand_generator(gmp_randinit_default);
     rand_generator.seed(get_seed<int>());
 
-    const size_t n = s.size(); 
+    const size_t n = s.size();
     Rcpp::NumericMatrix M(n);
 
     unsigned int counter = 0;
@@ -249,10 +249,10 @@ unsigned int significativityCounter(const Rcpp::Function &sigma, const SIGMA_VAL
 
 /**
  * @brief Estimate the sigma-significativity of c in M_{n,m}
- * 
- * This function estimates the sigma-significativity of c in M_{n,m} by using 
+ *
+ * This function estimates the sigma-significativity of c in M_{n,m} by using
  * the Monte Carlo method.
- * 
+ *
  * @tparam SIGMA_VALUE_TYPE is the sigma-value type
  * @param sigma is an agreement measure
  * @param c is a sigma-value
@@ -271,11 +271,11 @@ inline double significativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &c
 
 /**
  * @brief Count how many of the matrices in M_{n,m} have sigma(M)<c
- * 
- * This function counts how many of the (n x n)-confusion matrices whose elements 
- * sum up to m, i.e., how many of the matrices M in M_{n,m}, are such that 
+ *
+ * This function counts how many of the (n x n)-confusion matrices whose elements
+ * sum up to m, i.e., how many of the matrices M in M_{n,m}, are such that
  * sigma(M)<c.
- * 
+ *
  * @tparam SIGMA_VALUE_TYPE is the sigma-value type
  * @param sigma is an agreement measure
  * @param c is a sigma-value
@@ -314,9 +314,9 @@ mpz_class significativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_
 
 /**
  * @brief Compute the sigma-significativity of c in M_{n,m}
- * 
+ *
  * This function computes the sigma-significativity of c in M_{n,m}.
- * 
+ *
  * @tparam SIGMA_VALUE_TYPE is the sigma-value type
  * @param sigma is an agreement measure
  * @param c is a sigma-value
@@ -335,10 +335,10 @@ inline double significativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &c
 
 /**
  * @brief Sample the probability simplex
- * 
+ *
  * This function uniformly samples the probability simplex whose dimension is
  * `V.size()` and copies the sample in `V`.
- * 
+ *
  * @tparam VECTOR_TYPE is the sample output type
  * @param V is the vector in which the sample will be placed
  * @param rand_generator is a random generator
@@ -360,9 +360,9 @@ void fill_sample_probability_simplex(VECTOR_TYPE& V, gmp_randclass& rand_generat
 
 /**
  * @brief Sample the k-dimensional probability simplex
- * 
+ *
  * This function uniformly samples the k-probability simplex.
- * 
+ *
  * @tparam VECTOR_TYPE is the sample output type
  * @param k is the dimension of the probability simplex to be sampled
  * @param rand_generator is a random generator
@@ -379,11 +379,11 @@ VECTOR_TYPE sample_probability_simplex(const size_t& k, gmp_randclass& rand_gene
 
 /**
  * @brief Sample N times P_{n} and count how many samples M have sigma(M)<c
- * 
+ *
  * This function uniformly samples N times the set of the (n x n)-probability
- * matrices, i.e., P_{n}, and counts how many of the samples M are such that 
+ * matrices, i.e., P_{n}, and counts how many of the samples M are such that
  * sigma(M)<c.
- * 
+ *
  * @tparam SIGMA_VALUE_TYPE is the sigma-value type
  * @param sigma is an agreement measure
  * @param c is a sigma-value
@@ -422,10 +422,10 @@ unsigned int PsignificativityCounter(const Rcpp::Function &sigma, const SIGMA_VA
 
 /**
  * @brief Estimate the sigma-significativity of c in P_{n}
- * 
- * This function estimates the sigma-significativity of c in P_{n} by using 
+ *
+ * This function estimates the sigma-significativity of c in P_{n} by using
  * the Monte Carlo method.
- * 
+ *
  * @tparam SIGMA_VALUE_TYPE is the sigma-value type
  * @param sigma is an agreement measure
  * @param c is a sigma-value
@@ -442,10 +442,10 @@ inline double Psignificativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &
 
 /**
  * @brief Estimate the sigma-significativity of c in M_{(s,.)}
- * 
- * This function estimates the sigma-significativity of c in M_{(s,.)} by using 
+ *
+ * This function estimates the sigma-significativity of c in M_{(s,.)} by using
  * the Monte Carlo method.
- * 
+ *
  * @tparam SIGMA_VALUE_TYPE is the sigma-value type
  * @param sigma is an agreement measure
  * @param c is a sigma-value
