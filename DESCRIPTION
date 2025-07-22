@@ -1,8 +1,8 @@
 Package: rSignificativity
 Type: Package
 Title: An R package for Agreement Value Significativity
-Version: 0.2.3
-Date: 2025-07-02
+Version: 0.3.0
+Date: 2025-07-22
 Authors@R: c(
     person("Alberto", "Casagrande", email = "alberto.casagrande@uniud.it", role = c("aut", "cre")))
 Author: Alberto Casagrande [aut, cre]
