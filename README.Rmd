@@ -34,6 +34,8 @@ In order to install the development version of `rSignificativity`, you need:
 
 * the R package [`devtools`](https://devtools.r-lib.org)
 
+* the [GMP library](https://gmplib.org)
+
 * [git](https://git-scm.com/downloads)
 
 When the requirements have been satisfied, issue the R command:
