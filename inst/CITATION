@@ -10,16 +10,18 @@ bibentry(bibtype     = "unpublished",
                          person(given = "Fabris", family = "Francesco"),
                          person(given = "Rossano", family = "Girometti"),
                          person(given = "Roberto", family = "Pagliarini")),
-         title       = "Agreement Value Significativity",
-         month       = "March",
+         title       = "Significativity Indices for Agreement Values",
+         month       = "July",
          year        = "2025",
+         doi         = "10.48550/arXiv.2504.15325",
          note        = "Unpublished",
          textVersion =
            paste(paste0("Casagrande, Alberto and Fabris,",
                         "Francesco and Girometti, Rossano, ",
                         "and Pagliarini, Roberto"),
-                 "(March, 2025).",
-                 "Agreement Value Significativity",
+                 "(July, 2025).",
+                 "Significativity Indices for Agreement Values,",
+                 "doi: 10.48550/arXiv.2504.15325",
                  sep = " ")
 )
 
