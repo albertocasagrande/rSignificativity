@@ -163,9 +163,9 @@ INTEGER_TYPE get_seed()
  * @return the number of sampled confusion matrices M such that sigma(M)<c
  */
 template <typename SIGMA_VALUE_TYPE = double>
-unsigned int significativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_TYPE &c,
-                                    const size_t &n, const unsigned int m,
-                                    const unsigned int &N)
+mpz_class significativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_TYPE &c,
+                                 const size_t &n, const unsigned int m,
+                                 const unsigned int &N)
 {
     auto indicatorFunction = [&sigma, &c](const Rcpp::NumericMatrix &M)
     {
@@ -186,7 +186,7 @@ unsigned int significativityCounter(const Rcpp::Function &sigma, const SIGMA_VAL
 
     const auto class_size = binom<size_t, mpz_class>(m + k - 1, m);
 
-    unsigned int counter = 0;
+    mpz_class counter = 0;
     for (size_t i = 0; i < N; ++i)
     {
         mpz_class rand = rand_generator.get_z_range(class_size);
@@ -212,9 +212,9 @@ unsigned int significativityCounter(const Rcpp::Function &sigma, const SIGMA_VAL
  * @return the number of sampled confusion matrices M such that sigma(M)<c
  */
 template <typename SIGMA_VALUE_TYPE = double>
-unsigned int significativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_TYPE &c,
-                                    const std::vector<unsigned int>& s,
-                                    const unsigned int &N)
+mpz_class significativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_TYPE &c,
+                                 const std::vector<unsigned int>& s,
+                                 const unsigned int &N)
 {
     auto indicatorFunction = [&sigma, &c](const Rcpp::NumericMatrix &M)
     {
@@ -232,7 +232,7 @@ unsigned int significativityCounter(const Rcpp::Function &sigma, const SIGMA_VAL
     const size_t n = s.size();
     Rcpp::NumericMatrix M(n);
 
-    unsigned int counter = 0;
+    mpz_class counter = 0;
     for (size_t i = 0; i < N; ++i)
     {
         for (size_t j = 0; j < s.size(); ++j) {
@@ -266,7 +266,9 @@ inline double significativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &c
                               const size_t &n, const unsigned int m,
                               const unsigned int &N)
 {
-    return static_cast<double>(significativityCounter(sigma, c, n, m, N)) / N;
+    mpq_class r(significativityCounter(sigma, c, n, m, N), N);
+
+    return r.get_d();
 }
 
 /**
@@ -392,8 +394,8 @@ VECTOR_TYPE sample_probability_simplex(const size_t& k, gmp_randclass& rand_gene
  * @return the number of sampled probability matrices M such that sigma(M)<c
  */
 template <typename SIGMA_VALUE_TYPE = double>
-unsigned int PsignificativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_TYPE &c, const size_t &n,
-                                     const unsigned int &N)
+mpz_class PsignificativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_TYPE &c, const size_t &n,
+                                  const unsigned int &N)
 {
     auto indicatorFunction = [&sigma, &c](const Rcpp::NumericMatrix &M)
     {
@@ -410,7 +412,7 @@ unsigned int PsignificativityCounter(const Rcpp::Function &sigma, const SIGMA_VA
 
     Rcpp::NumericMatrix M(n);
 
-    unsigned int counter = 0;
+    mpz_class counter = 0;
     for (size_t i = 0; i < N; ++i)
     {
         fill_sample_probability_simplex(M, rand_generator);
@@ -437,7 +439,9 @@ template <typename SIGMA_TYPE, typename SIGMA_VALUE_TYPE = double>
 inline double Psignificativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &c, const size_t &n,
                                const unsigned int &N)
 {
-    return static_cast<double>(PsignificativityCounter(sigma, c, n, N)) / N;
+    mpq_class r(PsignificativityCounter(sigma, c, n, N), N);
+
+    return r.get_d();
 }
 
 /**
@@ -458,5 +462,7 @@ inline double significativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &c
                               const std::vector<unsigned int>& s,
                               const unsigned int &N)
 {
-    return static_cast<double>(significativityCounter(sigma, c, s, N)) / N;
+    mpq_class r(significativityCounter(sigma, c, s, N), N);
+
+    return r.get_d();
 }
