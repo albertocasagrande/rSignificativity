@@ -45,6 +45,35 @@ OUTPUT_TYPE binom(PARAM_TYPE a, PARAM_TYPE b)
 }
 
 /**
+ * @brief Get the number of matrices respecting s
+ *
+ * A confusion matrix \$M\$ respects a vector \$s \in \mathbb{N}^n\$
+ * when:
+ * 1. \$M\$ is a square matrix having \$|s|\$ rows and columns
+ * 2. the sum of the elements on the \$i\$-th rows is \$s(i)\$.
+ *
+ * This function returns the number of matrices respecting a vector s
+ *
+ * @tparam OUTPUT_TYPE is the output type
+ * @tparam PARAM_TYPE is the type of values in `s`
+ * @param s is a vector maintaining the sums of the elements for each row
+ * @return The number of confusion matrices respecting `s`
+ */
+template<typename OUTPUT_TYPE, typename PARAM_TYPE>
+OUTPUT_TYPE num_of_matrices_respecting(const std::vector<PARAM_TYPE>& s)
+{
+    OUTPUT_TYPE cardinality{1};
+
+    const size_t n{s.size()};
+    for (const auto& row_sum: s) {
+        cardinality *= binom<size_t, OUTPUT_TYPE>(row_sum+n-1,
+                                                  row_sum);
+    }
+
+    return cardinality;
+}
+
+/**
  * @brief A lexicographic order enumerator for weak compositions of m in k parts
  *
  * This function implements a lexicographic order enumerator for weak
@@ -147,6 +176,15 @@ INTEGER_TYPE get_seed()
     return as<INTEGER_TYPE>(sample_int(machine["integer.max"], 1));
 }
 
+bool is_nan(SEXP x) {
+    if (TYPEOF(x) == REALSXP && Rf_length(x) > 0) {
+        Rcpp::NumericVector vec(x);
+        return R_IsNaN(vec[0]);
+    }
+    // If it's not a REALSXP or if the vector is empty, it can't be NaN
+    return false;
+}
+
 /**
  * @brief Sample N times M_{n,m} and count how many samples M have sigma(M)<c
  *
@@ -169,7 +207,8 @@ mpz_class significativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_
 {
     auto indicatorFunction = [&sigma, &c](const Rcpp::NumericMatrix &M)
     {
-        if (Rcpp::as<double>(sigma(M)) < c)
+        const auto avalue{sigma(M)};
+        if (is_nan(avalue) || Rcpp::as<double>(avalue) < c)
         {
             return 1;
         }
@@ -218,7 +257,8 @@ mpz_class significativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_
 {
     auto indicatorFunction = [&sigma, &c](const Rcpp::NumericMatrix &M)
     {
-        if (Rcpp::as<double>(sigma(M)) < c)
+        const auto avalue{sigma(M)};
+        if (is_nan(avalue) || Rcpp::as<double>(avalue) < c)
         {
             return 1;
         }
@@ -291,7 +331,8 @@ mpz_class significativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE_
 {
     auto indicatorFunction = [&sigma, &c](const Rcpp::NumericMatrix &M)
     {
-        if (Rcpp::as<double>(sigma(M)) < c)
+        const auto avalue{sigma(M)};
+        if (is_nan(avalue) || Rcpp::as<double>(avalue) < c)
         {
             return 1;
         }
@@ -330,7 +371,16 @@ template <typename SIGMA_TYPE, typename SIGMA_VALUE_TYPE = double>
 inline double significativity(const SIGMA_TYPE &sigma, const SIGMA_VALUE_TYPE &c,
                               const size_t &n, const unsigned int m)
 {
-    mpq_class r(significativityCounter(sigma, c, n, m), binom<size_t, mpz_class>(m + n*n - 1, m));
+    if (m==0) {
+        throw std::domain_error("The m must be positive.");
+    }
+
+    if (n<2) {
+        throw std::domain_error("The n must be greater than 1.");
+    }
+
+    mpq_class r(significativityCounter(sigma, c, n, m),
+                binom<size_t, mpz_class>(m + n*n - 1, m));
 
     return r.get_d();
 }
@@ -399,7 +449,8 @@ mpz_class PsignificativityCounter(const Rcpp::Function &sigma, const SIGMA_VALUE
 {
     auto indicatorFunction = [&sigma, &c](const Rcpp::NumericMatrix &M)
     {
-        if (Rcpp::as<double>(sigma(M)) < c)
+        const auto avalue{sigma(M)};
+        if (is_nan(avalue) || Rcpp::as<double>(avalue) < c)
         {
             return 1;
         }
