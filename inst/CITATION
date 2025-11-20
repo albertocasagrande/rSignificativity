@@ -23,7 +23,7 @@ bibentry(bibtype     = "article",
                         "Francesco and Girometti, Rossano, ",
                         "and Pagliarini, Roberto"),
                  "Significativity Indices for Agreement Values",
-                 "Stat Comput 35, 197 (2025)."
+                 "Stat Comput 35, 197 (2025).",
                  "https://doi.org/10.1007/s11222-025-10728-1",
                  sep = " ")
 )
