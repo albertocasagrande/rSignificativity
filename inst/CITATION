@@ -17,7 +17,7 @@ bibentry(bibtype     = "article",
          journal = "Statistics and Computing",
          volume = {35},
          number = {6},
-         pages = {197}
+         pages = {197},
          textVersion =
            paste(paste0("Casagrande, Alberto and Fabris,",
                         "Francesco and Girometti, Rossano, ",
