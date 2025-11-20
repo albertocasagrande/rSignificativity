@@ -1,0 +1,64 @@
+# rSignificativity
+
+`rSignificativity` is an R package that implements the
+$\sigma$-significativity for agreement values.
+
+#### Help and support
+
+## [![rSignificativity GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-https://albertocasagrande.github.io/rSignificativity/-yellow.svg)](https://albertocasagrande.github.io/rSignificativity/)
+
+### Installation
+
+In order to install the development version of `rSignificativity`, you
+need:
+
+- [R and Rtools](https://cran.r-project.org)
+
+- the R package [`devtools`](https://devtools.r-lib.org)
+
+- the [GMP library](https://gmplib.org)
+
+- [git](https://git-scm.com/downloads)
+
+When the requirements have been satisfied, issue the R command:
+
+``` r
+devtools::install_github("albertocasagrande/rSignificativity")
+```
+
+------------------------------------------------------------------------
+
+#### Copyright and contacts
+
+Copyright (c) 2025 Alberto Casagrande <alberto.casagrande@uniud.it>
+
+# Package index
+
+## Agreement Measures
+
+- [`cohen_kappa()`](https://albertocasagrande.github.io/rSignificativity/reference/Cohen-single-quote-s-kappa.md)
+  : Cohen's \\\kappa\\
+- [`scott_pi()`](https://albertocasagrande.github.io/rSignificativity/reference/Scott-single-quote-s-pi.md)
+  : Scott's \\\pi\\
+- [`IA()`](https://albertocasagrande.github.io/rSignificativity/reference/Information-Agreement.md)
+  : Information Agreement
+
+## Sigma-Significativity
+
+- [`marginal.significativity`](https://albertocasagrande.github.io/rSignificativity/reference/marginal.significativity.md)
+  : Estimate the marginal \\\sigma\\-significativity of \\c\\
+- [`significativity`](https://albertocasagrande.github.io/rSignificativity/reference/significativity.md)
+  : The \\\sigma\\-significativity of \\c\\
+- [`sample_prob_simplex`](https://albertocasagrande.github.io/rSignificativity/reference/sample_prob_simplex.md)
+  : Uniformly sampling \\\Delta^{(k-1)}\\
+- [`weak_composition_enum`](https://albertocasagrande.github.io/rSignificativity/reference/weak_composition_enum.md)
+  : The lexicographic weak composition enumeration
+
+# Articles
+
+### Introduction
+
+- [Agreement Value
+  Significativity](https://albertocasagrande.github.io/rSignificativity/articles/significativity.md):
+
+  Measuring the significativity of agreement values
