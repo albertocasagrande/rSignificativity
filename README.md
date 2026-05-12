@@ -29,7 +29,7 @@ In order to install the development version of `rSignificativity`, you need:
 When the requirements have been satisfied, issue the R command:
 
 ``` r
-devtools::install_github("albertocasagrande/rSignificativity")
+pak::pak("albertocasagrande/rSignificativity")
 ```
 
 
