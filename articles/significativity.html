@@ -72,9 +72,9 @@
     
 <p>Agreement measures, such as Cohen’s
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>κ</mi><annotation encoding="application/x-tex">\kappa</annotation></semantics></math><span class="citation">(Cohen 1960)</span> and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="normal">IA</mtext><annotation encoding="application/x-tex">\textrm{IA}</annotation></semantics></math><span class="citation">(Casagrande, Fabris, and Girometti 2020)</span>,
-gauge the agreement between two discrete classifiers mapping their
-confusion matrices into real values.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="normal">IA</mtext><annotation encoding="application/x-tex">\textrm{IA}</annotation></semantics></math><span class="citation">(Casagrande et al. 2020)</span>, gauge the
+agreement between two discrete classifiers mapping their confusion
+matrices into real values.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create a confusion matrix</span></span>
 <span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
@@ -134,24 +134,24 @@ choosing by chance a matrix whose
 greater than
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>.</p>
 <p>Since
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">|</mo><msub><mi>ℳ</mi><mrow><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><mo stretchy="true" form="postfix">|</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mfrac linethickness="0"><mrow><msup><mi>n</mi><mn>2</mn></msup><mo>+</mo><mi>m</mi><mo>−</mo><mn>1</mn></mrow><mi>m</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">|\mathcal{M}_{n,m}|=\binom{n^2+m-1}{m}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><msub><mi>ℳ</mi><mrow><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mfrac linethickness="0"><mrow><msup><mi>n</mi><mn>2</mn></msup><mo>+</mo><mi>m</mi><mo>−</mo><mn>1</mn></mrow><mi>m</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">|\mathcal{M}_{n,m}|=\binom{n^2+m-1}{m}</annotation></semantics></math>,
 computing
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>𝜚</mo><mrow><mi>σ</mi><mo>,</mo><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\varrho_{\sigma, n, m}(c)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝜚</mi><mrow><mi>σ</mi><mo>,</mo><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>c</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\varrho_{\sigma, n, m}(c)</annotation></semantics></math>
 takes time
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>n</mi><mn>2</mn></msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac linethickness="0"><mrow><msup><mi>n</mi><mn>2</mn></msup><mo>+</mo><mi>m</mi><mo>−</mo><mn>1</mn></mrow><mi>m</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">O\left(n^2\binom{n^2+m-1}{m}\right)</annotation></semantics></math>.
 Nevertheless, the Monte Carlo method <span class="citation">(Metropolis
 and Ulam 1949)</span> can estimate
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>𝜚</mo><mrow><mi>σ</mi><mo>,</mo><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\varrho_{\sigma, n, m}(c)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝜚</mi><mrow><mi>σ</mi><mo>,</mo><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>c</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\varrho_{\sigma, n, m}(c)</annotation></semantics></math>
 with
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>
 samples in time
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Θ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>+</mo><mi>m</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\Theta(N(n^2+m))</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Θ</mi><mo stretchy="false" form="prefix">(</mo><mi>N</mi><mo stretchy="false" form="prefix">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo>+</mo><mi>m</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\Theta(N(n^2+m))</annotation></semantics></math>
 with an error proportional to
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><msqrt><mi>N</mi></msqrt></mrow><annotation encoding="application/x-tex">1/\sqrt{N}</annotation></semantics></math>
 (e.g., see <span class="citation">(Mackay 1998)</span>).</p>
 <p>The function <code><a href="../reference/significativity.html">significativity()</a></code> lets us to both exactly
 compute
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>𝜚</mo><mrow><mi>σ</mi><mo>,</mo><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\varrho_{\sigma, n, m}(c)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝜚</mi><mrow><mi>σ</mi><mo>,</mo><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>c</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\varrho_{\sigma, n, m}(c)</annotation></semantics></math>
 and estimate it by using the Monte Carlo method.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://albertocasagrande.github.io/rSignificativity">"rSignificativity"</a></span><span class="op">)</span></span>
@@ -186,32 +186,32 @@ matrices, is <span class="math display">$$
 \frac{V\left(\left\{M \in \mathcal{P}_{n} \, |\, \sigma(M) &lt;
 c\right\}\right)}{V(\Delta^{(n^2-1)})}
 $$</span> where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>Δ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>k</mi><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></msup><mo>=</mo><mrow><mo stretchy="true" form="prefix">{</mo><mo stretchy="false" form="prefix">⟨</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><msub><mi>x</mi><mi>k</mi></msub><mo stretchy="false" form="postfix">⟩</mo><mo>∈</mo><msubsup><mi>ℝ</mi><mrow><mo>≥</mo><mn>0</mn></mrow><mi>k</mi></msubsup><mspace width="0.167em"></mspace><mo stretchy="false" form="prefix">|</mo><mspace width="0.167em"></mspace><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>k</mi></msubsup><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn><mo stretchy="true" form="postfix">}</mo></mrow></mrow><annotation encoding="application/x-tex">\Delta^{(k-1)} =\left\{ \langle x_1, \ldots x_k \rangle \in \mathbb{R}_{\geq 0}^k\, |\, \sum_{i=1}^k x_i = 1\right\}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi mathvariant="normal">Δ</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>k</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow></msup><mo>=</mo><mrow><mo stretchy="true" form="prefix">{</mo><mo stretchy="false" form="prefix">⟨</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><msub><mi>x</mi><mi>k</mi></msub><mo stretchy="false" form="postfix">⟩</mo><mo>∈</mo><msubsup><mi>ℝ</mi><mrow><mo>≥</mo><mn>0</mn></mrow><mi>k</mi></msubsup><mspace width="0.167em"></mspace><mo stretchy="false" form="prefix">|</mo><mspace width="0.167em"></mspace><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>k</mi></msubsup><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><mn>1</mn><mo stretchy="true" form="postfix">}</mo></mrow></mrow><annotation encoding="application/x-tex">\Delta^{(k-1)} =\left\{ \langle x_1, \ldots x_k \rangle \in \mathbb{R}_{\geq 0}^k\, |\, \sum_{i=1}^k x_i = 1\right\}</annotation></semantics></math>
 is the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>-dimensional
 probability simplex and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>⋅</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">V(\cdot)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">V(\cdot)</annotation></semantics></math>
 is the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n^2-1</annotation></semantics></math>-dimensional
 Lebesgue measure <span class="citation">(Casagrande et al.
 2025)</span>.</p>
 <p>If
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>M</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>&lt;</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">\sigma(M) &lt; c</annotation></semantics></math>
-is definable in an o-minimal theory <span class="citation">(van den
-Dries 1998)</span>, such as in the case of Cohen’s
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo stretchy="false" form="prefix">(</mo><mi>M</mi><mo stretchy="false" form="postfix">)</mo><mo>&lt;</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">\sigma(M) &lt; c</annotation></semantics></math>
+is definable in an o-minimal theory <span class="citation">(<span class="nocase">van den Dries</span> 1998)</span>, such as in the case of
+Cohen’s
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>κ</mi><annotation encoding="application/x-tex">\kappa</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">IA</mtext><mo>*</mo></mrow><annotation encoding="application/x-tex">\textrm{IA}*</annotation></semantics></math>,
 then
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munder><mo>lim</mo><mrow><mi>m</mi><mo>→</mo><mo>+</mo><mi>∞</mi></mrow></munder><msub><mo>𝜚</mo><mrow><mi>σ</mi><mo>,</mo><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msub><mi>ρ</mi><mrow><mi>σ</mi><mo>,</mo><mi>n</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munder><mi mathvariant="normal">lim</mi><mrow><mi>m</mi><mo>→</mo><mi>+</mi><mi>∞</mi></mrow></munder><msub><mi>𝜚</mi><mrow><mi>σ</mi><mo>,</mo><mi>n</mi><mo>,</mo><mi>m</mi></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>c</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>ρ</mi><mrow><mi>σ</mi><mo>,</mo><mi>n</mi></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>c</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \lim_{m \rightarrow +\infty}\varrho_{\sigma, n, m}(c) = \rho_{\sigma, n}(c).
 </annotation></semantics></math></p>
 <p>We can estimate
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ρ</mi><mrow><mi>σ</mi><mo>,</mo><mi>n</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\rho_{\sigma, n}(c)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ρ</mi><mrow><mi>σ</mi><mo>,</mo><mi>n</mi></mrow></msub><mo stretchy="false" form="prefix">(</mo><mi>c</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\rho_{\sigma, n}(c)</annotation></semantics></math>
 by using the Monte Carlo method with
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>
 samples in time
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Θ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>n</mi><mn>2</mn></msup><mi>N</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\Theta(n^2 N)</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Θ</mi><mo stretchy="false" form="prefix">(</mo><msup><mi>n</mi><mn>2</mn></msup><mi>N</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\Theta(n^2 N)</annotation></semantics></math>.
 The function <code><a href="../reference/significativity.html">significativity()</a></code> also implements this
 algorithm.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -235,16 +235,17 @@ algorithm.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/significativity.html">significativity</a></span><span class="op">(</span><span class="va">cohen_kappa</span>, <span class="fl">0.5</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.9012</span></span></code></pre></div>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Casagrande:2020b" class="csl-entry">
 Casagrande, Alberto, Francesco Fabris, and Rossano Girometti. 2020.
-<span>“Extending Information Agreement by Continuity.”</span> In
-<em>2020 IEEE International Conference on Bioinformatics and Biomedicine
-(BIBM)</em>, 1432–39. IEEE. <a href="https://doi.org/10.1109/BIBM49941.2020.9313173" class="external-link">https://doi.org/10.1109/BIBM49941.2020.9313173</a>.
+<span>“Extending Information Agreement by Continuity.”</span> <em>2020
+IEEE International Conference on Bioinformatics and Biomedicine
+(BIBM)</em>, 1432–39. <a href="https://doi.org/10.1109/BIBM49941.2020.9313173" class="external-link">https://doi.org/10.1109/BIBM49941.2020.9313173</a>.
 </div>
 <div id="ref-significativity" class="csl-entry">
 Casagrande, Alberto, Francesco Fabris, Girometti Rossano, and Roberto
 Pagliarini. 2025. <span>“Statical Coefficient Significativity.”</span>
+Unpublished manuscript.
 </div>
 <div id="ref-Cohen:1960" class="csl-entry">
 Cohen, Jacob. 1960. <span>“A Coefficient of Agreement for Nominal
@@ -254,17 +255,17 @@ Scales.”</span> <em>Educational and Psychological Measurement</em> 20:
 <div id="ref-Mackay1998" class="csl-entry">
 Mackay, D. J. C. 1998. <span>“Introduction to Monte Carlo
 Methods.”</span> In <em>Learning in Graphical Models</em>, edited by
-Michael I. Jordan, 175–204. Dordrecht: Springer Netherlands. <a href="https://doi.org/10.1007/978-94-011-5014-9_7" class="external-link">https://doi.org/10.1007/978-94-011-5014-9_7</a>.
+Michael I. Jordan. Springer Netherlands. <a href="https://doi.org/10.1007/978-94-011-5014-9_7" class="external-link">https://doi.org/10.1007/978-94-011-5014-9_7</a>.
 </div>
 <div id="ref-montecarlo" class="csl-entry">
 Metropolis, Nicholas, and Stanisław Ulam. 1949. <span>“<span>The Monte
-Carlo Method</span>.”</span> <em><span>Journal of the American
-Statistical Association</span></em> 44 (247): 335–41. <a href="https://doi.org/10.1080/01621459.1949.10483310" class="external-link">https://doi.org/10.1080/01621459.1949.10483310</a>.
+Carlo Method</span>.”</span> <em><span class="nocase">Journal of the
+American Statistical Association</span></em> 44 (247): 335–41. <a href="https://doi.org/10.1080/01621459.1949.10483310" class="external-link">https://doi.org/10.1080/01621459.1949.10483310</a>.
 </div>
 <div id="ref-Dries_1998" class="csl-entry">
-van den Dries, Lou P. D. 1998. <em>Tame Topology and o-Minimal
-Structures</em>. London Mathematical Society Lecture Note Series.
-Cambridge University Press.
+<span class="nocase">van den Dries, Lou P. D.</span> 1998. <em>Tame
+Topology and o-Minimal Structures</em>. London Mathematical Society
+Lecture Note Series. Cambridge University Press.
 </div>
 </div>
   </main>

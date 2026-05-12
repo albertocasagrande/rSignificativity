@@ -21,11 +21,11 @@ distribution.
 ``` r
 # sample the 5-dimensional probability simplex
 sample_prob_simplex(5)
-#> [1] 0.1701992 0.1082816 0.2597004 0.2710165 0.1908022
+#> [1] 0.06124928 0.10853198 0.25938669 0.49842545 0.07240661
 
 # successive calls may produce different results
 sample_prob_simplex(5)
-#> [1] 0.01736597 0.16952667 0.43687385 0.18650819 0.18972533
+#> [1] 0.18866814 0.02929237 0.42859466 0.29296202 0.06048280
 
 # setting the random seed before the call guarantee repeatability
 set.seed(1)

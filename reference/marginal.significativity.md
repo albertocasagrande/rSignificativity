@@ -48,7 +48,7 @@ s <- as.integer(c(10, 1))
 
 # gauge kappa-significativity of 0.5 in M_{(s,.)} with 10000 samples
 marginal.significativity(cohen_kappa, 0.5, s)
-#> [1] 0.9032
+#> [1] 0.9121
 
 # define a different vector defining the number of classifications of a
 # two-class classifier 
@@ -60,15 +60,15 @@ s3 <- as.integer(c(6, 5, 3, 8, 5))
 
 # gauge kappa-significativity of 0.5 in M_{(s3,.)} with 10000 samples
 marginal.significativity(cohen_kappa, 0.5, s3)
-#> [1] 0.9995
+#> [1] 0.9992
 
 # gauge kappa-significativity of 0.5 in M_{(s3,.)} with 40000 samples
 marginal.significativity(cohen_kappa, 0.5, s3, number_of_samples=40000)
-#> [1] 0.99955
+#> [1] 0.999725
 
 # gauge kappa-significativity of 0.5 in M_{(s2,.)} with 10000 samples
 marginal.significativity(cohen_kappa, 0.5, s2)
-#> [1] 0.8552
+#> [1] 0.8567
 
 # define a (2x2)-confusion matrix
 M <- matrix(as.integer(c(9, 0, 1, 1)), nrow=2)
@@ -83,7 +83,7 @@ cohen_kappa(M)
 # with 10000 samples
 marginal.significativity(cohen_kappa, cohen_kappa(M),
                          as.integer(rowSums(M)))
-#> [1] 0.914
+#> [1] 0.9032
 
 # define another (2x2)-confusion matrix
 M2 <- matrix(as.integer(c(5, 0, 1, 5)), nrow=2)
@@ -98,5 +98,5 @@ cohen_kappa(M2)
 # with 10000 samples
 marginal.significativity(cohen_kappa, cohen_kappa(M2),
                          as.integer(rowSums(M2)))
-#> [1] 0.9548
+#> [1] 0.9509
 ```

@@ -64,11 +64,11 @@ probability distribution.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># sample the 5-dimensional probability simplex</span></span></span>
 <span class="r-in"><span><span class="fu">sample_prob_simplex</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1701992 0.1082816 0.2597004 0.2710165 0.1908022</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.06124928 0.10853198 0.25938669 0.49842545 0.07240661</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># successive calls may produce different results</span></span></span>
 <span class="r-in"><span><span class="fu">sample_prob_simplex</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01736597 0.16952667 0.43687385 0.18650819 0.18972533</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.18866814 0.02929237 0.42859466 0.29296202 0.06048280</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># setting the random seed before the call guarantee repeatability</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>

@@ -51,11 +51,11 @@ instead `m` is set to `NULL`, the \\\sigma\\-significativity of \\c\\ in
 ``` r
 # evaluate kappa-significativity of 0.5 in M_{2,5} with 10000 samples
 significativity(cohen_kappa, 0.5, 2, 5)
-#> [1] 0.8263
+#> [1] 0.817
 
 # evaluate kappa-significativity of 0.5 in M_{2,5} with 1000 samples
 significativity(cohen_kappa, 0.5, 2, 5, number_of_samples = 1000)
-#> [1] 0.804
+#> [1] 0.815
 
 # exactly compute kappa-significativity of 0.5 in M_{2,5}
 significativity(cohen_kappa, 0.5, 2, 5, number_of_samples = NULL)
@@ -63,15 +63,15 @@ significativity(cohen_kappa, 0.5, 2, 5, number_of_samples = NULL)
 
 # evaluate kappa-significativity of 0.5 in P_{2} with 1000 samples
 significativity(cohen_kappa, 0.5, 2, number_of_samples = 1000)
-#> [1] 0.886
+#> [1] 0.892
 
 # evaluate kappa-significativity of 0.5 in P_{2} with 10000 samples
 significativity(cohen_kappa, 0.5, 2)
-#> [1] 0.897
+#> [1] 0.8916
 
 # successive calls to Monte Carlo methods may produce different results
 significativity(cohen_kappa, 0.5, 2)
-#> [1] 0.8982
+#> [1] 0.897
 
 # setting the random seed before the call guarantee repeatability
 set.seed(1)
