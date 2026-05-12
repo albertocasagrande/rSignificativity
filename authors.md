@@ -11,7 +11,7 @@ Source:
 [`inst/CITATION`](https://github.com/albertocasagrande/rSignificativity/inst/CITATION)
 
 Casagrande, Alberto and Fabris,Francesco and Girometti, Rossano, and
-Pagliarini, Roberto Significativity Indices for Agreement Values Stat
+Pagliarini, Roberto {Significativity Indices for Agreement Values} Stat
 Comput 35, 197 (2025). https://doi.org/10.1007/s11222-025-10728-1
 
     @Article{,
@@ -24,6 +24,21 @@ Comput 35, 197 (2025). https://doi.org/10.1007/s11222-025-10728-1
       volume = {35},
       number = {6},
       pages = {197},
+    }
+
+Casagrande, Alberto and Pagliarini, Roberto {A Marginal Significativity
+Index for Agreement Value} {2025 IEEE International Conference on
+Bioinformatics and Biomedicine (BIBM)}.
+https://10.1109/BIBM66473.2025.11356859
+
+    @InProceedings{,
+      author = {Alberto Casagrande and Roberto Pagliarini},
+      title = {{A Marginal Significativity Index for Agreement Values}},
+      month = {12},
+      year = {2025},
+      booktitle = {{2025 IEEE International Conference on Bioinformatics and Biomedicine (BIBM)}},
+      pages = {5392-5399},
+      doi = {10.1109/BIBM66473.2025.11356859},
     }
 
 Casagrande, Alberto (2025). rSignificativity: An R package for Agreement

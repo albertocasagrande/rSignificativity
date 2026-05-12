@@ -31,4 +31,4 @@ pak::pak("albertocasagrande/rSignificativity")
 
 #### Copyright and contacts
 
-Copyright (c) 2025 Alberto Casagrande <alberto.casagrande@uniud.it>
+Copyright (c) 2025-2026 Alberto Casagrande <alberto.casagrande@uniud.it>
