@@ -3,7 +3,7 @@ version <- meta$Version
 note    <- sprintf("R package version %s", version)
 
 
-citHeader("To cite rSignificativity in publications use these two references:")
+citHeader("To cite rSignificativity in publications use these three references:")
 
 bibentry(bibtype     = "article",
          author      = c(person(given = "Alberto", family = "Casagrande"),
@@ -22,11 +22,29 @@ bibentry(bibtype     = "article",
            paste(paste0("Casagrande, Alberto and Fabris,",
                         "Francesco and Girometti, Rossano, ",
                         "and Pagliarini, Roberto"),
-                 "Significativity Indices for Agreement Values",
+                 "{Significativity Indices for Agreement Values}",
                  "Stat Comput 35, 197 (2025).",
                  "https://doi.org/10.1007/s11222-025-10728-1",
                  sep = " ")
 )
+
+bibentry(bibtype     = "inproceedings",
+	 author      = c(person(given = "Alberto", family = "Casagrande"),
+                         person(given = "Roberto", family = "Pagliarini")),
+         title = "{A Marginal Significativity Index for Agreement Values}",
+         month = "12",
+         year = "2025",
+	 booktitle="{2025 IEEE International Conference on Bioinformatics and Biomedicine (BIBM)}",
+  	 pages="5392-5399",
+	 doi="10.1109/BIBM66473.2025.11356859",
+         textVersion =
+           paste(paste0("Casagrande, Alberto and Pagliarini, Roberto"),
+                 "{A Marginal Significativity Index for Agreement Value}",
+                 "{2025 IEEE International Conference on Bioinformatics and Biomedicine (BIBM)}.",
+                 "https://10.1109/BIBM66473.2025.11356859",
+                 sep = " ")
+)
+
 
 bibentry(bibtype     = "Manual",
          title       = paste0("{rSignificativity}: An R package for",
