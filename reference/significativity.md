@@ -5,10 +5,9 @@ value \\c\\ in either \\\mathcal{M}\_{n,m}\\ or \\\mathcal{P}\_{n}\\
 depending on the call parameters.
 
 When `m` is a natural number, the \\\sigma\\-significativity of \\c\\ in
-\\\mathcal{M}\_{n,m}\\ is evaluated. If `number_of_samples` is a natural
-number, the significativity is estimated by using the Monte Carlo
-method. Otherwise, the computation considers all the \\n \times
-n\\-confusion matrices.
+\\\mathcal{M}\_{n,m}\\ is evaluated. If `N` is a natural number, the
+significativity is estimated by using the Monte Carlo method. Otherwise,
+the computation considers all the \\n \times n\\-confusion matrices.
 
 When instead `m` is set to `NULL`, the function uses the Monte Carlo
 method to estimate the \\\sigma\\-significativity of \\c\\ in
@@ -34,7 +33,7 @@ method to estimate the \\\sigma\\-significativity of \\c\\ in
   function estimate the \\\sigma\\-significativity of \\c\\ in
   \\\mathcal{P}\_{n}\\ (default: `NULL`).
 
-- number_of_samples:
+- N:
 
   The number of samples used to evaluate the significativity by using
   Monte Carlo method (default: 10000).
@@ -54,15 +53,15 @@ significativity(cohen_kappa, 0.5, 2, 5)
 #> [1] 0.817
 
 # evaluate kappa-significativity of 0.5 in M_{2,5} with 1000 samples
-significativity(cohen_kappa, 0.5, 2, 5, number_of_samples = 1000)
+significativity(cohen_kappa, 0.5, 2, 5, N = 1000)
 #> [1] 0.815
 
 # exactly compute kappa-significativity of 0.5 in M_{2,5}
-significativity(cohen_kappa, 0.5, 2, 5, number_of_samples = NULL)
+significativity(cohen_kappa, 0.5, 2, 5, N = NULL)
 #> [1] 0.8214286
 
 # evaluate kappa-significativity of 0.5 in P_{2} with 1000 samples
-significativity(cohen_kappa, 0.5, 2, number_of_samples = 1000)
+significativity(cohen_kappa, 0.5, 2, N = 1000)
 #> [1] 0.892
 
 # evaluate kappa-significativity of 0.5 in P_{2} with 10000 samples

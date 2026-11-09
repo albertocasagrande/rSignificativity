@@ -28,7 +28,7 @@ probability of choosing with uniform distribution a matrix \\M \in
 
   A vector of natural values.
 
-- number_of_samples:
+- N:
 
   The number of samples used to evaluate the significativity by using
   Monte Carlo method (default: 10000).
@@ -37,14 +37,14 @@ probability of choosing with uniform distribution a matrix \\M \in
 
 The function returns the \\\sigma\\-significativity of \\c\\ in
 \\\mathcal{M}\_{(s,\cdot)}\\ as estimated by the Monte Carlo method
-using `number_of_samples` samples.
+using `N` samples.
 
 ## Examples
 
 ``` r
 # define a vector defining the number of classifications of a
 # two-class classifier 
-s <- as.integer(c(10, 1))
+s <- c(10, 1)
 
 # gauge kappa-significativity of 0.5 in M_{(s,.)} with 10000 samples
 marginal.significativity(cohen_kappa, 0.5, s)
@@ -52,18 +52,18 @@ marginal.significativity(cohen_kappa, 0.5, s)
 
 # define a different vector defining the number of classifications of a
 # two-class classifier 
-s2 <- as.integer(c(6, 5))
+s2 <- c(6, 5)
 
 # define a vector defining the number of classifications of a five-class
 # classifier 
-s3 <- as.integer(c(6, 5, 3, 8, 5))
+s3 <- c(6, 5, 3, 8, 5)
 
 # gauge kappa-significativity of 0.5 in M_{(s3,.)} with 10000 samples
 marginal.significativity(cohen_kappa, 0.5, s3)
 #> [1] 0.9992
 
 # gauge kappa-significativity of 0.5 in M_{(s3,.)} with 40000 samples
-marginal.significativity(cohen_kappa, 0.5, s3, number_of_samples=40000)
+marginal.significativity(cohen_kappa, 0.5, s3, N=40000)
 #> [1] 0.999725
 
 # gauge kappa-significativity of 0.5 in M_{(s2,.)} with 10000 samples
@@ -71,7 +71,7 @@ marginal.significativity(cohen_kappa, 0.5, s2)
 #> [1] 0.8567
 
 # define a (2x2)-confusion matrix
-M <- matrix(as.integer(c(9, 0, 1, 1)), nrow=2)
+M <- matrix(c(9, 0, 1, 1), nrow=2)
 M
 #>      [,1] [,2]
 #> [1,]    9    1
@@ -81,12 +81,11 @@ cohen_kappa(M)
 
 # gauge kappa-significativity of cohen_kappa(M) in M_{(rowSums(M),.)}
 # with 10000 samples
-marginal.significativity(cohen_kappa, cohen_kappa(M),
-                         as.integer(rowSums(M)))
+marginal.significativity(cohen_kappa, cohen_kappa(M), rowSums(M))
 #> [1] 0.9032
 
 # define another (2x2)-confusion matrix
-M2 <- matrix(as.integer(c(5, 0, 1, 5)), nrow=2)
+M2 <- matrix(c(5, 0, 1, 5), nrow=2)
 M2
 #>      [,1] [,2]
 #> [1,]    5    1
@@ -96,7 +95,6 @@ cohen_kappa(M2)
 
 # gauge kappa-significativity of cohen_kappa(M2) in M_{(rowSums(M2),.)}
 # with 10000 samples
-marginal.significativity(cohen_kappa, cohen_kappa(M2),
-                         as.integer(rowSums(M2)))
+marginal.significativity(cohen_kappa, cohen_kappa(M2), rowSums(M2))
 #> [1] 0.9509
 ```
