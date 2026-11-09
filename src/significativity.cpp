@@ -61,39 +61,45 @@ double validate_double(const SEXP &value, const std::string &name)
 }
 
 double M_significativity(const Rcpp::Function &sigma, const SEXP &c, const SEXP &n,
-                         const SEXP m, const SEXP &number_of_samples)
+                         const SEXP m, const SEXP &N)
 {
     auto c_c = validate_double(c, "c");
     auto c_n = validate_unsigned_int(n, "n");
     auto c_m = validate_unsigned_int(m, "m");
 
-    if (number_of_samples == R_NilValue)
+    if (N == R_NilValue)
     {
         return significativity(sigma, c_c, c_n, c_m);
     }
-    auto c_number_of_samples = validate_unsigned_int(number_of_samples, "number_of_samples");
+    auto c_number_of_samples = validate_unsigned_int(N, "N");
 
     return significativity(sigma, c_c, c_n, c_m, c_number_of_samples);
 }
 
 double P_significativity(const Rcpp::Function &sigma, const SEXP &c, const SEXP &n,
-                         const SEXP &number_of_samples)
+                         const SEXP &N)
 {
     auto c_c = validate_double(c, "c");
     auto c_n = validate_unsigned_int(n, "n");
-    auto c_number_of_samples = validate_unsigned_int(number_of_samples, "number_of_samples");
+    auto c_number_of_samples = validate_unsigned_int(N, "N");
 
     return Psignificativity(sigma, c_c, c_n, c_number_of_samples);
 }
 
 double MP_significativity(const Rcpp::Function &sigma, const SEXP &c, const SEXP &n,
-                          const SEXP m, const SEXP &number_of_samples)
+                          const SEXP m, const SEXP &N, const SEXP &number_of_samples)
 {
+    if (number_of_samples != R_NilValue) {
+        Rcpp::stop("The parameter \"number_of_samples\" is deprecated. "
+                   "Use the parameter \"N\".");
+    
+    }
+
     if (m == R_NilValue)
     {
-        return P_significativity(sigma, c, n, number_of_samples);
+        return P_significativity(sigma, c, n, N);
     }
-    return M_significativity(sigma, c, n, m, number_of_samples);
+    return M_significativity(sigma, c, n, m, N);
 }
 
 std::vector<unsigned int> validate_unsigned_int_vect(const SEXP &value, const std::string &name)
@@ -106,11 +112,17 @@ std::vector<unsigned int> validate_unsigned_int_vect(const SEXP &value, const st
 }
 
 double marginal_significativity(const Rcpp::Function &sigma, const SEXP &c,
-                                const SEXP &s, const SEXP &number_of_samples)
+                                const SEXP &s, const SEXP &N, const SEXP &number_of_samples)
 {
+    if (number_of_samples != R_NilValue) {
+        ::Rf_error("The parameter \"number_of_samples\" is deprecated. "
+                   "Use the parameter \"N\".");
+    
+    }
+
     auto c_c = validate_double(c, "c");
     auto c_s = validate_unsigned_int_vect(s, "s");
-    auto c_number_of_samples = validate_unsigned_int(number_of_samples, "number_of_samples");
+    auto c_number_of_samples = validate_unsigned_int(N, "N");
 
     return significativity(sigma, c_c, c_s, c_number_of_samples);
 }
@@ -140,7 +152,7 @@ RCPP_MODULE(rSignificativity)
 //'   \eqn{\mathcal{P}_{n}} depending on the call parameters.
 //'
 //'   When `m` is a natural number, the \eqn{\sigma}-significativity of \eqn{c}
-//'   in \eqn{\mathcal{M}_{n,m}} is evaluated. If `number_of_samples` is
+//'   in \eqn{\mathcal{M}_{n,m}} is evaluated. If `N` is
 //'   a natural number, the significativity is estimated by using the Monte
 //'   Carlo method. Otherwise, the computation considers all the
 //'   \eqn{n \times n}-confusion matrices.
@@ -154,7 +166,7 @@ RCPP_MODULE(rSignificativity)
 //' @param m The sum of the confusion matrix elements. When set to `NULL`,
 //'   the function estimate the \eqn{\sigma}-significativity of \eqn{c} in
 //'   \eqn{\mathcal{P}_{n}} (default: `NULL`).
-//' @param number_of_samples The number of samples used to evaluate the
+//' @param N The number of samples used to evaluate the
 //'   significativity by using Monte Carlo method (default: 10000).
 //' @return When `m` is a natural number, the function returns the
 //'   \eqn{\sigma}-significativity of \eqn{c} in \eqn{\mathcal{M}_{n,m}}.
@@ -165,13 +177,13 @@ RCPP_MODULE(rSignificativity)
 //' significativity(cohen_kappa, 0.5, 2, 5)
 //'
 //' # evaluate kappa-significativity of 0.5 in M_{2,5} with 1000 samples
-//' significativity(cohen_kappa, 0.5, 2, 5, number_of_samples = 1000)
+//' significativity(cohen_kappa, 0.5, 2, 5, N = 1000)
 //'
 //' # exactly compute kappa-significativity of 0.5 in M_{2,5}
-//' significativity(cohen_kappa, 0.5, 2, 5, number_of_samples = NULL)
+//' significativity(cohen_kappa, 0.5, 2, 5, N = NULL)
 //'
 //' # evaluate kappa-significativity of 0.5 in P_{2} with 1000 samples
-//' significativity(cohen_kappa, 0.5, 2, number_of_samples = 1000)
+//' significativity(cohen_kappa, 0.5, 2, N = 1000)
 //'
 //' # evaluate kappa-significativity of 0.5 in P_{2} with 10000 samples
 //' significativity(cohen_kappa, 0.5, 2)
@@ -187,7 +199,7 @@ RCPP_MODULE(rSignificativity)
 //' significativity(cohen_kappa, 0.5, 2)
     function("significativity", &MP_significativity,
              List::create(_["sigma"], _["c"], _["n"], _["m"] = R_NilValue,
-                          _["number_of_samples"] = 10000),
+                          _["N"] = 10000, _["number_of_samples"] = R_NilValue),
              "Estimate the sigma-significativity of c in P_{n}");
 
 //' @name marginal.significativity
@@ -209,11 +221,11 @@ RCPP_MODULE(rSignificativity)
 //' @param sigma An agreement measure.
 //' @param c An agreement value.
 //' @param s A vector of natural values.
-//' @param number_of_samples The number of samples used to evaluate the
+//' @param N The number of samples used to evaluate the
 //'   significativity by using Monte Carlo method (default: 10000).
 //' @return The function returns the \eqn{\sigma}-significativity of
 //'   \eqn{c} in \eqn{\mathcal{M}_{(s,\cdot)}} as estimated by the
-//'   Monte Carlo method using `number_of_samples` samples.
+//'   Monte Carlo method using `N` samples.
 //' @examples
 //' # define a vector defining the number of classifications of a
 //' # two-class classifier 
@@ -234,7 +246,7 @@ RCPP_MODULE(rSignificativity)
 //' marginal.significativity(cohen_kappa, 0.5, s3)
 //'
 //' # gauge kappa-significativity of 0.5 in M_{(s3,.)} with 40000 samples
-//' marginal.significativity(cohen_kappa, 0.5, s3, number_of_samples=40000)
+//' marginal.significativity(cohen_kappa, 0.5, s3, N=40000)
 //'
 //' # gauge kappa-significativity of 0.5 in M_{(s2,.)} with 10000 samples
 //' marginal.significativity(cohen_kappa, 0.5, s2)
@@ -260,7 +272,7 @@ RCPP_MODULE(rSignificativity)
 //'                          as.integer(rowSums(M2)))
     function("marginal.significativity", &marginal_significativity,
              List::create(_["sigma"], _["c"], _["s"],
-                          _["number_of_samples"] = 10000),
+                          _["N"] = 10000, _["number_of_samples"] = R_NilValue),
              "Estimate the sigma-significativity of c in M_{(s,.)}");
 
 //' @name weak_composition_enum

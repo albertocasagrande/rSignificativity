@@ -2,7 +2,7 @@ devtools::load_all()
 
 produce_rho_data <- function(sigma, sigma_name, sigma_min, sigma_max,
                              c_steps = 20, Ns = c(2, 3, 4, 5),
-                             repetitions = 100, number_of_samples = 10000) {
+                             repetitions = 100, N = 10000) {
 
   df <- data.frame(matrix(ncol = 1, nrow = c_steps + 1))
   colnames(df) <- sigma_name
@@ -17,7 +17,7 @@ produce_rho_data <- function(sigma, sigma_name, sigma_min, sigma_max,
     for (i in 1:repetitions) {
       images <- apply(df[, sigma_name, drop = FALSE], 1, function(c) {
         significativity(sigma, c, n,
-                        number_of_samples = number_of_samples)
+                        N = N)
       })
       sum_images <- sum_images + images
     }
@@ -30,7 +30,7 @@ produce_rho_data <- function(sigma, sigma_name, sigma_min, sigma_max,
     for (i in 1:repetitions) {
       images <- apply(df[, sigma_name, drop = FALSE], 1, function(c) {
         significativity(sigma, c, n,
-                        number_of_samples = number_of_samples)
+                        N = N)
       })
       sum_images <- sum_images + (images - mean_images)^2
     }

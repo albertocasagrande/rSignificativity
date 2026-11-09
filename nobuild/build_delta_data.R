@@ -3,7 +3,7 @@ devtools::load_all()
 produce_delta_data <- function(sigma, sigma_name, sigma_min, sigma_max,
                                c_steps = 20, Ns = c(2, 3),
                                Ms = c(10, 100, 1000),
-                               repetitions = 10, number_of_samples = 10000) {
+                               repetitions = 10, N = 10000) {
 
   df <- data.frame(matrix(ncol = 1, nrow = c_steps + 1))
   colnames(df) <- sigma_name
@@ -15,8 +15,7 @@ produce_delta_data <- function(sigma, sigma_name, sigma_min, sigma_max,
 
     set.seed(1)
     rho <- apply(df[, sigma_name, drop = FALSE], 1, function(c) {
-      significativity(sigma, c, n,
-                      number_of_samples = number_of_samples)
+      significativity(sigma, c, n, N = N)
     })
 
     df[paste0("rho", n)] <- rho
@@ -26,8 +25,7 @@ produce_delta_data <- function(sigma, sigma_name, sigma_min, sigma_max,
       sum_images <- rep(0, c_steps + 1)
       for (i in 1:repetitions) {
         images <- apply(df[, sigma_name, drop = FALSE], 1, function(c) {
-          significativity(sigma, c, n, m,
-                          number_of_samples = number_of_samples)
+          significativity(sigma, c, n, m, N = N)
         })
         sum_images <- sum_images + images
       }

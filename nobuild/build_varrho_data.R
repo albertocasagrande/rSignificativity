@@ -19,12 +19,12 @@ for (n in Ns) {
     test_name <- paste0("R_", sigma_name, "_", n, "_", m)
 
     df[test_name] <- apply(df[, sigma_name, drop = FALSE], 1, function(c) {
-      significativity(sigma, c, n, m, number_of_samples = NULL)
+      significativity(sigma, c, n, m, N = NULL)
     })
 
-    number_of_samples <- ceiling(sqrt(choose(n^2 + m - 1, m)))
+    N <- ceiling(sqrt(choose(n^2 + m - 1, m)))
 
-    df[paste0("num_of_samples_", test_name)] <- number_of_samples
+    df[paste0("num_of_samples_", test_name)] <- N
 
     set.seed(1)
     sum_images <- rep(0, k + 1)
@@ -32,7 +32,7 @@ for (n in Ns) {
     for (i in 1:repetitions) {
       images <- apply(df[, sigma_name, drop = FALSE], 1, function(c) {
         significativity(sigma, c, n, m,
-                        number_of_samples = number_of_samples)
+                        N = N)
       })
 
       sum_images <- sum_images + images
@@ -51,7 +51,7 @@ for (n in Ns) {
     for (i in 1:repetitions) {
       images <- apply(df[, sigma_name, drop = FALSE], 1, function(c) {
         significativity(sigma, c, n, m,
-                        number_of_samples = number_of_samples)
+                        N = N)
       })
 
       sum_images <- sum_images + (images - mean_images)^2
