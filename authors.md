@@ -41,14 +41,14 @@ https://10.1109/BIBM66473.2025.11356859
       doi = {10.1109/BIBM66473.2025.11356859},
     }
 
-Casagrande, Alberto (2025). rSignificativity: An R package for Agreement
-Value Significiativity. R package version 0.4.0, url:
+Casagrande, Alberto (2026). rSignificativity: An R package for Agreement
+Value Significiativity. R package version 0.5.0, url:
 https://albertocasagrande.github.io/rSignificativity.
 
     @Manual{,
       title = {{rSignificativity}: An R package forAgreement Value Significativity},
       author = {Alberto Casagrande},
-      year = {2025},
-      note = {R package version 0.4.0},
+      year = {2026},
+      note = {R package version 0.5.0},
       url = {https://albertocasagrande.github.io/rSignificativity},
     }
