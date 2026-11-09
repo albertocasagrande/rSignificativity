@@ -102,13 +102,34 @@ double MP_significativity(const Rcpp::Function &sigma, const SEXP &c, const SEXP
     return M_significativity(sigma, c, n, m, N);
 }
 
-std::vector<unsigned int> validate_unsigned_int_vect(const SEXP &value, const std::string &name)
+std::vector<unsigned int> validate_unsigned_int_vect(const SEXP &Rcpp_obj, const std::string &name)
 {
-    if (! Rcpp::is<Rcpp::IntegerVector>(value)) {
-        ::Rf_error("The parameter \"%s\" must be a vector of unsigned positive integers.", name.c_str());
+    if (Rcpp::is<Rcpp::IntegerVector>(Rcpp_obj)) {
+        return Rcpp::as<std::vector<unsigned int>>(Rcpp_obj);
     }
 
-    return Rcpp::as<std::vector<unsigned int>>(value);
+    if (!Rcpp::is<Rcpp::NumericVector>(Rcpp_obj)) {
+        ::Rf_error("The parameter \"%s\" must be a vector of unsigned integers.",
+                   name.c_str());
+    }
+
+    Rcpp::NumericVector rcpp_V = Rcpp::as<Rcpp::NumericVector>(Rcpp_obj);
+
+    std::vector<unsigned int> V(rcpp_V.size());
+
+    auto V_it = V.begin();
+    for (const auto& v : rcpp_V) {
+        if (!std::isfinite(v) || v < 0 || std::floor(v) != v) {
+            ::Rf_error("The parameter \"%s\" must be a vector of unsigned integers.",
+                        name.c_str());
+        }
+
+        *V_it = v;
+
+        ++V_it;
+    }
+
+    return V;
 }
 
 double marginal_significativity(const Rcpp::Function &sigma, const SEXP &c,
@@ -229,18 +250,18 @@ RCPP_MODULE(rSignificativity)
 //' @examples
 //' # define a vector defining the number of classifications of a
 //' # two-class classifier 
-//' s <- as.integer(c(10, 1))
+//' s <- c(10, 1)
 //'
 //' # gauge kappa-significativity of 0.5 in M_{(s,.)} with 10000 samples
 //' marginal.significativity(cohen_kappa, 0.5, s)
 //'
 //' # define a different vector defining the number of classifications of a
 //' # two-class classifier 
-//' s2 <- as.integer(c(6, 5))
+//' s2 <- c(6, 5)
 //'
 //' # define a vector defining the number of classifications of a five-class
 //' # classifier 
-//' s3 <- as.integer(c(6, 5, 3, 8, 5))
+//' s3 <- c(6, 5, 3, 8, 5)
 //'
 //' # gauge kappa-significativity of 0.5 in M_{(s3,.)} with 10000 samples
 //' marginal.significativity(cohen_kappa, 0.5, s3)
@@ -252,24 +273,22 @@ RCPP_MODULE(rSignificativity)
 //' marginal.significativity(cohen_kappa, 0.5, s2)
 //'
 //' # define a (2x2)-confusion matrix
-//' M <- matrix(as.integer(c(9, 0, 1, 1)), nrow=2)
+//' M <- matrix(c(9, 0, 1, 1), nrow=2)
 //' M
 //' cohen_kappa(M)
 //'
 //' # gauge kappa-significativity of cohen_kappa(M) in M_{(rowSums(M),.)}
 //' # with 10000 samples
-//' marginal.significativity(cohen_kappa, cohen_kappa(M),
-//'                          as.integer(rowSums(M)))
+//' marginal.significativity(cohen_kappa, cohen_kappa(M), rowSums(M))
 //'
 //' # define another (2x2)-confusion matrix
-//' M2 <- matrix(as.integer(c(5, 0, 1, 5)), nrow=2)
+//' M2 <- matrix(c(5, 0, 1, 5), nrow=2)
 //' M2
 //' cohen_kappa(M2)
 //'
 //' # gauge kappa-significativity of cohen_kappa(M2) in M_{(rowSums(M2),.)}
 //' # with 10000 samples
-//' marginal.significativity(cohen_kappa, cohen_kappa(M2),
-//'                          as.integer(rowSums(M2)))
+//' marginal.significativity(cohen_kappa, cohen_kappa(M2), rowSums(M2))
     function("marginal.significativity", &marginal_significativity,
              List::create(_["sigma"], _["c"], _["s"],
                           _["N"] = 10000, _["number_of_samples"] = R_NilValue),
