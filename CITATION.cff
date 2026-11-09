@@ -1,0 +1,61 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the articles listed below."
+title: "rSignificativity"
+type: software
+authors:
+  - family-names: "Casagrande"
+    given-names: "Alberto"
+    orcid: "https://orcid.org/0000-0002-8681-1482"
+repository-code: "https://github.com/albertocasagrande/rSignificativity"
+keywords:
+  - significativity
+  - agreement measures
+  - Cohen's kappa
+  - classification
+
+preferred-citation:
+  type: article
+  title: "Significativity Indices for Agreement Values"
+  authors:
+    - family-names: "Casagrande"
+      given-names: "Alberto"
+      orcid: "https://orcid.org/0000-0002-8681-1482"
+    - family-names: "Fabris"
+      given-names: "Francesco"
+      orcid: "https://orcid.org/0000-0002-1950-8838"
+    - family-names: "Girometti"
+      given-names: "Rossano"
+      orcid: "https://orcid.org/0000-0002-0904-5147"
+    - family-names: "Pagliarini"
+      given-names: "Roberto"
+      orcid: "https://orcid.org/0000-0001-9672-4326"
+  journal: "Statistics and Computing"
+  volume: 35
+  issue: 6
+  start: 197
+  year: 2025
+  date-published: 2025-09-22
+  issn: "1573-1375"
+  doi: "10.1007/s11222-025-10728-1"
+  url: "https://doi.org/10.1007/s11222-025-10728-1"
+
+references:
+  - type: conference-paper
+    title: "A Marginal Significativity Index for Agreement Values"
+    authors:
+      - family-names: "Casagrande"
+        given-names: "Alberto"
+        orcid: "https://orcid.org/0000-0002-8681-1482"
+      - family-names: "Pagliarini"
+        given-names: "Roberto"
+        orcid: "https://orcid.org/0000-0001-9672-4326"
+    collection-title: "2025 IEEE International Conference on Bioinformatics and Biomedicine (BIBM)"
+    conference:
+      name: "2025 IEEE International Conference on Bioinformatics and Biomedicine (BIBM)"
+    publisher:
+      name: "IEEE"
+    start: 5392
+    end: 5399
+    year: 2025
+    doi: "10.1109/BIBM66473.2025.11356859"
+    url: "https://doi.org/10.1109/BIBM66473.2025.11356859"
